@@ -1,9 +1,8 @@
 var express = require('express');
-var app = express();
+var routes = require('./app/routes');
+var exp = express();
 
-app.get('/', function(req, res){
-  res.send('hello world');
-});
+exp.get('/', routes.generate);
 
 console.log('The application is listening at port 3000');
-app.listen(3000);
+exp.listen(3000);
