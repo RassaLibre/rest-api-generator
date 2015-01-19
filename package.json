@@ -1,0 +1,26 @@
+{
+    "name" : "rest-api-generator", 
+    "description" : "REST API generator",
+    "keywords" : ["REST", "API", "Generator"],
+    "version" : "0.0.1",
+    "private" : true,
+    "author" : {
+        "name" : "Tomas Prochazka",
+        "email" : "tomasprochazkacze@gmail.com"
+    },
+    "contributors" : [],
+    "main" : "somename", 
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/substack/node-optimist.git"
+    },
+    "dependencies" : { 
+        "somedep" : "~0.7.2"
+    },
+    "licenses" : [
+        {
+            "type" : "MIT",
+            "url" : "http://www.opensource.org/licenses/mit-license.php"
+        }
+    ]
+}
