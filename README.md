@@ -26,7 +26,7 @@ The existing solution has a couple of imperfections:
 	3. no template snippets
 	
 I suggest three different types of templates:
-
+![Picture with templates](https://raw.githubusercontent.com/RassaLibre/rest-api-generator/master/docs/templates.jpg "Three different type of templates")
 	
 
 ##Pre-Requests for development
