@@ -8,6 +8,8 @@ var generate_handlers = {
   * generate NodeJS server
   */
   nodejs: function(req, res){
+    //TODO: validate incoming data against metamodel
+    //TODO: DSM
     fs.readFile(config.TEMPLATE_DIR+'main'+config.TEMPLATE_SUFFIX, "utf8", function(error, data){
       var temp = _.template(data)({name : "Tomas"});
       res.send(temp);
