@@ -8,11 +8,14 @@ Master thesis. I guess I will make some people really really happy that it is ag
 	3. No pre-requests for the generation (installed programs, JVM etc).
 	4. The generated REST API shall be delivered with a file allowing automated testing and documentation generation.
 	5. Production ready REST API.
+	6. GitHub integration (???)
 	
 ##Why?
 
 	1. Fast development. The time can be used on the app development.
 	2. Sharing of experience and best practices in REST API development.
+	3. Possible to transform any already written REST API to this approach.
+	4. Documentation and auto-testing.
 
 ##Research "value"
 
