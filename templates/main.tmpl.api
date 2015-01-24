@@ -1,1 +1,0 @@
-r.HandleFunc("/<%= name %>", Handlers.HomeHandler).Methods("GET", "POST", "PUT")
