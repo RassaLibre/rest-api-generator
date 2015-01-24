@@ -1,5 +1,5 @@
 var assert = require("assert"); // node.js core module
-var Metamodel = require('../app/metamodel/metamodel');
+var Metamodel = require('../app/metamodel');
 var example_data = require('./example_data');
 
 describe('Metamodel', function(){
