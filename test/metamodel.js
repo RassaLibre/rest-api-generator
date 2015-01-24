@@ -66,6 +66,17 @@ describe('Metamodel', function(){
     assert.equal(metamodel.validate_properties_(data), true);    
   });
 
+  it('should check that the http method is allowed', function(){
+    var data = [{
+      "id": ":33",
+      "type": "TOMAS",
+      "url": "ovens/"
+    }];
+    assert.equal(metamodel.validate_endpoints_(data), false);
+    data[0].type = "GET";
+    assert.equal(metamodel.validate_endpoints_(data), true);
+  });
+
 
 
 });
