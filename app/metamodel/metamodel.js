@@ -29,6 +29,14 @@ var metamodel = function(){
   */
   this.other_property_types_ = ["timestamp", "geojson"];
 
+  /**
+  * contains all primitive types which are allowed as a array value
+  * it is needed because a validation of array value property is needed
+  * @private
+  * @type {Array}
+  */
+  this.array_value_primitive_types_ = ["integer", "string", "double"];
+
 };
 
 /**
@@ -94,18 +102,21 @@ metamodel.prototype.validate_properties_ = function(properties){
         if(!_.isUndefined(properties[i].type.max)){
           if(!_.isNumber(properties[i].type.max)) return false;
         }
-        if(properties[i].type.min > properties[i].type.max) return false;
+        //if both min and max are defined, check that min is smaller than max
+        if((!_.isUndefined(properties[i].type.min))&&
+          (!_.isUndefined(properties[i].type.max))){
+            if(properties[i].type.min > properties[i].type.max) return false;
+        }
     }
     //if the property is type of array, check the key and value
     else if(properties[i].type.type === 'array'){
-      if(!_.isUndefined(properties[i].type.key)){
-        if(!_.isString(properties[i].type.key)) return false;
-      }
-      if(!_.isUndefined(properties[i].type.value)){
-        if(!_.isString(properties[i].type.value)) return false;
-      }  
+      if(!_.isString(properties[i].type.key)) return false;
+      if(!_.isString(properties[i].type.value)) return false;
+      var possible_value = this.array_value_primitive_types_.concat(this.model_names_);
+      if(_.indexOf(possible_value, properties[i].type.value) === -1) return false;
     }
-    //otherwise just check that the type is string
+    //otherwise just check that the type is one a model or one of the property
+    //types without additional arrays
     else{
       var possible_type = this.other_property_types_.concat(this.model_names_);
       if(_.indexOf(possible_type, properties[i].type.type) === -1) return false;
