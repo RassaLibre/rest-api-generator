@@ -1,6 +1,7 @@
 fs = require('fs');
 var config = require('../../config/config');
 var _ = require('underscore');
+var Metamodel = require('../metamodel/metamodel');
 
 var generate_handlers = {
 
@@ -8,12 +9,14 @@ var generate_handlers = {
   * generate NodeJS server
   */
   nodejs: function(req, res){
-    //TODO: validate incoming data against metamodel
-    //TODO: DSM
-    fs.readFile(config.TEMPLATE_DIR+'main'+config.TEMPLATE_SUFFIX, "utf8", function(error, data){
-      var temp = _.template(data)({name : "Tomas"});
-      res.send(temp);
-    });
+    var metamodel = new Metamodel();
+    if(metamodel.validate(req.body)){
+      //TODO: DSM
+      fs.readFile(config.TEMPLATE_DIR+'main'+config.TEMPLATE_SUFFIX, "utf8", function(error, data){
+        var temp = _.template(data)({name : "Tomas"});
+        res.send(temp);
+      });
+    }
   },
 
   /**
