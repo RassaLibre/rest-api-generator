@@ -5,6 +5,7 @@ var example_data = require('./example_data');
 describe('Metamodel', function(){
   
   var metamodel;
+
   beforeEach(function(){
     metamodel = new Metamodel();
   });
@@ -13,7 +14,7 @@ describe('Metamodel', function(){
     assert.equal(typeof metamodel, "object");
   });
 
-  it('should evaluate the model as valid', function(){
+  it('should evaluate the example model as valid', function(){
     assert.equal(metamodel.validate(example_data),true);
   });
 
@@ -32,6 +33,8 @@ describe('Metamodel', function(){
       }
     }];
     assert.equal(metamodel.validate_associations_(data), false);
+    data[0].model2.name = "Location";
+    assert.equal(metamodel.validate_associations_(data), true);
   });
 
   it('should check that integer/double property has min smaller than max',
