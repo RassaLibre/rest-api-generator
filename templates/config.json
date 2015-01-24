@@ -17,6 +17,8 @@
       {
         "path" : "duplicated.tmpl.js",
         "scope" : "model.models",
+        "reference" : "model",
+        "name_property" : "name",
         "destination" : "models/"
       }
     ]

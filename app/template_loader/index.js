@@ -47,15 +47,15 @@ Template_Loader.prototype.load_config_file = function(){
 };
 
 /**
-* function loads the atomic templates
-* maybe, i dunno
+* function loads the atomic templates and attaches them all to the scope
+* variable. Once that is done,
 */
 Template_Loader.prototype.load_atomic_templates = function(){
   var self = this;
-  async.each(this.config.templates.atomic,
+  async.each(this.config.templates.atomic,  //load all atomic templates in parallel
     function(template, callback){
       fs.readFile(self.template_path+template.path, "utf8",
-        function(error, data){
+        function(error, data){  //read the atomic templates and store them in scope
           if(error) callback(error);
           else{
             var template_name = template.path.split('.')[0];
@@ -66,10 +66,84 @@ Template_Loader.prototype.load_atomic_templates = function(){
         }
       );
     },
-    function(error){
+    function(error){  //once all loading is done, load, execute and save duplicated and normal templates
       if(error) console.log('ERROR:'+error);
       else console.log('it seems like that atomic templates has been loaded');
-      console.log(self.scope.get_scope());
+      async.parallel(
+        [
+          function(callback){
+            async.each(self.config.templates.duplicated,
+              function(template, each_callback){
+                fs.readFile(self.template_path+template.path, "utf8",
+                  function(error, data){
+                    if(error) each_callback(error);
+                    else{
+                      var original_scope = self.scope.get_scope();
+                      var desired_scope = template.scope;
+                      var splited_desired_scope = desired_scope.split('.');
+                      
+                      var temp_scope = original_scope;
+                      for(var i = 0; i < splited_desired_scope.length; i++){
+                        if(!_.isUndefined(temp_scope[splited_desired_scope[i]])){
+                          temp_scope = temp_scope[splited_desired_scope[i]];
+                        }
+                        else console.log('no such variable');
+                      }
+                      
+                      if(!_.isArray(temp_scope)) console.log('it is not an erray');
+                      console.log(temp_scope);
+                      for(var i = 0; i < temp_scope.length; i++){
+                        var new_scope = {};
+                        new_scope[template.reference] = temp_scope[i];
+                        var template_function = _.template(data);
+                        var executed_template = template_function(new_scope);
+                        var new_file_suffix = _.last(template.path.split('.'));
+                        var new_file_name = temp_scope[i][template.name_property];
+                        //TODO: implement destination
+                        fs.writeFileSync('generated/'+new_file_name+'.'+new_file_suffix,
+                          executed_template, 'utf8');    
+                      }
+
+                    }
+                  }
+                );
+              },
+              function(error){
+                console.log(error, 'error loading duplicated stuff');
+              }
+            );
+            //TODO: Load, exec and save duplicated
+          },
+          function(callback){
+            async.each(self.config.templates.normal,
+              function(template, each_callback){
+                fs.readFile(self.template_path+template.path, "utf8",
+                  function(error, data){
+                    if(error) each_callback(error);
+                    else{
+                      var template_function = _.template(data);
+                      var executed_template = template_function({scope: self.scope.get_scope()});
+                      var new_file_suffix = _.last(template.path.split('.'));
+                      var new_file_name = _.first(template.path.split('.'));
+                      //implement destination
+                      fs.writeFileSync('generated/'+new_file_name+'.'+new_file_suffix,
+                        executed_template, 'utf8');
+                    }
+                  }
+                );
+              },
+              function(error){
+                console.log(error, 'error loading normal stuff');
+              }
+            );
+            //TODO: Load, exec and save normal
+          }
+        ],
+        function(error, results){
+          console.log('all templates done!');
+          //TODO: generate APIARY
+        }
+      );
     }
   );
 };
