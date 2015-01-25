@@ -1,0 +1,26 @@
+{
+  "name" : "NodeJS REST API template collection",
+  "description" : "Template collection for creating NodeJS REST API",
+  "templates" : {
+    "normal" : [
+      {
+        "path" : "normal.tmpl.js",
+        "destination" : ""
+      }
+    ],
+    "atomic" : [
+      {
+        "path" : "atomic.tmpl.js"
+      }
+    ],
+    "duplicated" : [
+      {
+        "path" : "duplicated.tmpl.js",
+        "scope" : "model.models",
+        "reference" : "model",
+        "name_property" : "name",
+        "destination" : "models/"
+      }
+    ]
+  }
+}

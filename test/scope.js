@@ -21,6 +21,15 @@ describe('Scope', function(){
     assert.equal(scope.scope_variables_['new_one'], "Tomas");
   });
 
+  it('should register an array as scope variables', function(){
+    var arr = [];
+    arr["tomas"] = "guitar";
+    arr["table"] = "chair";
+    scope.register_scope_array(arr);
+    assert.equal(scope.scope_variables_['tomas'], "guitar");
+    assert.equal(scope.scope_variables_['table'], "chair");
+  });
+
   it('should not allow to register property named "model" to scope', function(){
     var res = scope.register_scope_variable('model','Tomas');
     assert.equal(res, false);
