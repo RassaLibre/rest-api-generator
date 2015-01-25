@@ -10,6 +10,9 @@
       {
         "path" : "normal2/normal2.tmpl.js",
         "destination" : "normal3/"
+      },
+      {
+        "path" : "blueprint/blueprint.tmpl.apib"
       }
     ],
     "atomic" : [
