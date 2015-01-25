@@ -1,10 +1,16 @@
 var assert = require("assert"); // node.js core module
 var Template_Saver = require('../app/template_saver');
 var fs = require('fs');
+var rmdir = require('rimraf');
 
 describe('Template Saver', function(){
 
   var template_saver, duplicated_templates, normal_templates, random;
+
+  var remove_templates = function(){
+    rmdir.sync('test/generated');
+    fs.mkdirSync('test/generated');  
+  };
 
   beforeEach(function(){
     random = Math.random()*100;
@@ -21,7 +27,22 @@ describe('Template Saver', function(){
     normal_templates = [{
       "path" : "normal.tmpl.js",
       "executed_template" : "Executed normal template"+random
-    }];
+    },
+    {
+      "path" : "normal2/normal2.tmpl.js",
+      "executed_template" : "Executed normal template"+random
+    },
+    {
+      "path" : "normal3.tmpl.js",
+      "executed_template" : "Executed normal template"+random,
+      "destination" : "normal3/"
+    },
+    {
+      "path" : "normal2/normal4.tmpl.js",
+      "executed_template" : "Executed normal template"+random,
+      "destination" : "normal3/"
+    }
+    ];
     template_saver = new Template_Saver(duplicated_templates, normal_templates, 'test/generated/');
   });
 
@@ -30,6 +51,7 @@ describe('Template Saver', function(){
   });
 
   it('should save the normal templates with a correct name', function(){
+    remove_templates();
     template_saver.save_normal_templates();
     assert.equal(fs.readFileSync('test/generated/normal.js',"utf8"), "Executed normal template"+random);
   });
@@ -39,6 +61,24 @@ describe('Template Saver', function(){
     assert.equal(fs.readFileSync('test/generated/Oven.js',"utf8"), "Oven template"+random);
     assert.equal(fs.readFileSync('test/generated/Location.js',"utf8"), "Location template"+random);
     assert.equal(fs.readFileSync('test/generated/Part.js',"utf8"), "Part template"+random);
+  });
+
+  it('should work with normal templates in subfolder', function(){
+    remove_templates();
+    template_saver.save_normal_templates();
+    assert.equal(fs.readFileSync('test/generated/normal2/normal2.js',"utf8"), "Executed normal template"+random);
+  });
+
+  it('should save normal templates according to the destination param', function(){
+    remove_templates();
+    template_saver.save_normal_templates(); 
+    assert.equal(fs.readFileSync('test/generated/normal3/normal3.js',"utf8"), "Executed normal template"+random); 
+  });
+
+  it('should be able to combine destination and subfolder', function(){
+    remove_templates();
+    template_saver.save_normal_templates(); 
+    assert.equal(fs.readFileSync('test/generated/normal3/normal4.js',"utf8"), "Executed normal template"+random);
   });
 
 });

@@ -19,7 +19,7 @@ Master thesis. I guess I will make some people really really happy that it is ag
 
 ##Research "value"
 
-Is it possible to generate a fully functional production ready REST API with an advanced templating system?
+We will see about that one...
 
 ##What is advanced templating system?
 The existing solution has a couple of imperfections:

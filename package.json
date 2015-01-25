@@ -29,5 +29,8 @@
       "type": "MIT",
       "url": "http://www.opensource.org/licenses/mit-license.php"
     }
-  ]
+  ],
+  "devDependencies": {
+    "rimraf": "^2.2.8"
+  }
 }

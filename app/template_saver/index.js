@@ -61,7 +61,9 @@ Template_saver.prototype.create_folder_structure = function(path){
     var splited = path.split('/');
     var temp_path = this.destination;
     for(var i = 0; i < splited.length-1; i++){  //-1 becuase the last one is the file itself
-      fs.mkdirSync(temp_path+'/'+splited[i]);
+      if(!fs.existsSync(temp_path+'/'+splited[i])){ //create only if the folder does not exists
+        fs.mkdirSync(temp_path+'/'+splited[i]);
+      }
       temp_path = temp_path + '/' + splited[i];
     }
     return temp_path+'/';
