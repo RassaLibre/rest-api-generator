@@ -89,7 +89,12 @@ Template_saver.prototype.save_normal_templates = function() {
     var normal_template = this.normal_templates[i];
     var new_file_suffix = this.determine_file_suffix(normal_template.path);
     var new_file_name = this.determine_file_name(normal_template.path);
-    var folders = this.create_folder_structure(normal_template.path);
+    var folders;
+    if(!_.isUndefined(normal_template.destination)){  //if the destination is defined
+      folders = this.create_folder_structure(normal_template.destination+
+        new_file_name+'.'+new_file_suffix);
+    }
+    else folders = this.create_folder_structure(normal_template.path);
     fs.writeFileSync(folders+new_file_name+'.'+new_file_suffix,
       normal_template['executed_template'], 'utf8');
   }

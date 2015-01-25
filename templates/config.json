@@ -9,7 +9,7 @@
       },
       {
         "path" : "normal2/normal2.tmpl.js",
-        "destination" : ""
+        "destination" : "normal3/"
       }
     ],
     "atomic" : [
