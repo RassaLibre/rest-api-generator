@@ -35,7 +35,12 @@ Template_saver.prototype.save_duplicated_templates = function() {
   for(var i = 0; i < this.duplicated_templates.length; i++){
     var duplicated_template = this.duplicated_templates[i];
     var new_file_suffix = this.determine_file_suffix(duplicated_template.path);
-    var folders = this.create_folder_structure(duplicated_template.path);
+    var folders;
+    if(!_.isUndefined(duplicated_template.destination)){  //if the destination is defined
+      folders = this.create_folder_structure(duplicated_template.destination+'.'
+        +new_file_suffix);
+    }
+    else folders = this.create_folder_structure(duplicated_template.path);
     var duplicates = Object.keys(duplicated_template['executed_templates']);    //keys like "Oven","Part"
     for(var j = 0; j < duplicates.length; j++){                                 //go through all of them and save them
       var duplicate  = duplicates[j];

@@ -13,7 +13,6 @@ describe('Template Saver', function(){
       "scope" : "model.models",
       "reference" : "model",
       "name_property" : "name",
-      "destination" : "models/",
       "executed_templates" : []
     }];
     duplicated_templates[0]["executed_templates"]["Oven"] = "Oven template"+random;
@@ -21,7 +20,6 @@ describe('Template Saver', function(){
     duplicated_templates[0]["executed_templates"]["Location"] = "Location template"+random;    
     normal_templates = [{
       "path" : "normal.tmpl.js",
-      "destination" : "",
       "executed_template" : "Executed normal template"+random
     }];
     template_saver = new Template_Saver(duplicated_templates, normal_templates, 'test/generated/');
