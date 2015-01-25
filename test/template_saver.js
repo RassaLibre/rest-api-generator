@@ -132,4 +132,14 @@ describe('Template Saver', function(){
     assert.equal(fs.readFileSync('test/generated/models2/Part.js',"utf8"), "Part template"+random);
   });
 
+  it('should determine the right file suffix', function(){
+    var ext = template_saver.determine_file_suffix('something/something/darkside.something.js');
+    assert.equal(ext, 'js');
+  });
+
+  it('should determine the right file name', function(){
+    var ext = template_saver.determine_file_name('something/something/darkside.something.js');
+    assert.equal(ext, 'darkside');
+  });
+
 });
