@@ -6,6 +6,10 @@
       {
         "path" : "normal.tmpl.js",
         "destination" : ""
+      },
+      {
+        "path" : "normal2/normal2.tmpl.js",
+        "destination" : ""
       }
     ],
     "atomic" : [

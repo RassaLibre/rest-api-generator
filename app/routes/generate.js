@@ -26,12 +26,14 @@ var generate_handlers = {
       scope.register_scope_array(atomic_templates); //register atomic templates in scope
       var duplicated_templates = template_loader.get_duplicated_templates();
       var normal_templates = template_loader.get_normal_templates();
+      //execute the templates
       var template_executor = new Template_Executor(duplicated_templates, normal_templates ,scope.get_scope());
       template_executor.execute_duplicated_templates();
       template_executor.execute_normal_templates();
       normal_templates = template_executor.get_normal_templates();
       duplicated_templates = template_executor.get_duplicated_templates();
-      var template_saver = new Template_Saver(duplicated_templates, normal_templates);
+      //save the templates
+      var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
       res.send('have no idea, look to the console');
