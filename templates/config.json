@@ -24,6 +24,13 @@
         "reference" : "model",
         "name_property" : "name",
         "destination" : "models/"
+      },
+      {
+        "path" : "duplicated2/duplicated2.tmpl.js",
+        "scope" : "model.models",
+        "reference" : "model",
+        "name_property" : "name",
+        "destination" : "models/"
       }
     ]
   }

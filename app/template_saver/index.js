@@ -33,13 +33,13 @@ var Template_saver = function(duplicated_templates, normal_templates, destinatio
 */
 Template_saver.prototype.save_duplicated_templates = function() {
   for(var i = 0; i < this.duplicated_templates.length; i++){
-    var splited = _.last(this.duplicated_templates[i].path.split('/')).split('.');
-    var new_file_suffix = _.last(splited);
     var duplicated_template = this.duplicated_templates[i];
+    var new_file_suffix = this.determine_file_suffix(duplicated_template.path);
+    var folders = this.create_folder_structure(duplicated_template.path);
     var duplicates = Object.keys(duplicated_template['executed_templates']);    //keys like "Oven","Part"
     for(var j = 0; j < duplicates.length; j++){                                 //go through all of them and save them
       var duplicate  = duplicates[j];
-      fs.writeFileSync(this.destination+duplicate+'.'+new_file_suffix,
+      fs.writeFileSync(folders+duplicate+'.'+new_file_suffix,
         duplicated_template['executed_templates'][duplicate], 'utf8');
     }
   }
@@ -47,7 +47,7 @@ Template_saver.prototype.save_duplicated_templates = function() {
 
 /**
 * function gets a filepath and creates all the folders in the path
-* @param {String} path
+* @param {String} path for example 'sample/sample2/file.tmpl.js'
 * @return {String} created folder structure
 */
 Template_saver.prototype.create_folder_structure = function(path){
@@ -65,7 +65,7 @@ Template_saver.prototype.create_folder_structure = function(path){
 
 /**
 * function get path and returns the file suffix in the path
-* @param {String} path
+* @param {String} path for example 'sample/sample2/file.tmpl.js'
 * @return {String}
 */
 Template_saver.prototype.determine_file_suffix = function(path){
@@ -74,7 +74,7 @@ Template_saver.prototype.determine_file_suffix = function(path){
 
 /**
 * function get path and returns the file name in the path
-* @param {String} path
+* @param {String} path for example 'sample/sample2/file.tmpl.js'
 * @return {String}
 */
 Template_saver.prototype.determine_file_name = function(path){
