@@ -20,10 +20,37 @@ describe('Template Saver', function(){
       "reference" : "model",
       "name_property" : "name",
       "executed_templates" : []
-    }];
-    duplicated_templates[0]["executed_templates"]["Oven"] = "Oven template"+random;
-    duplicated_templates[0]["executed_templates"]["Part"] = "Part template"+random;
-    duplicated_templates[0]["executed_templates"]["Location"] = "Location template"+random;    
+    },
+    {
+      "path" : "duplicated2.tmpl.js",
+      "scope" : "model.models",
+      "reference" : "model",
+      "name_property" : "name",
+      "executed_templates" : [],
+      "destination" : "models/" 
+    },
+    {
+      "path" : "duplicated2/duplicated3.tmpl.js",
+      "scope" : "model.models",
+      "reference" : "model",
+      "name_property" : "name",
+      "executed_templates" : []  
+    },
+    {
+      "path" : "duplicated3/duplicated4.tmpl.js",
+      "scope" : "model.models",
+      "reference" : "model",
+      "name_property" : "name",
+      "executed_templates" : [],
+      "destination" : "models2/"  
+    }
+    ];
+    for(var j = 0; j < duplicated_templates.length; j++){
+      duplicated_templates[j]["executed_templates"]["Oven"] = "Oven template"+random;
+      duplicated_templates[j]["executed_templates"]["Part"] = "Part template"+random;
+      duplicated_templates[j]["executed_templates"]["Location"] = "Location template"+random;
+    }
+
     normal_templates = [{
       "path" : "normal.tmpl.js",
       "executed_template" : "Executed normal template"+random
@@ -75,10 +102,34 @@ describe('Template Saver', function(){
     assert.equal(fs.readFileSync('test/generated/normal3/normal3.js',"utf8"), "Executed normal template"+random); 
   });
 
-  it('should be able to combine destination and subfolder', function(){
+  it('should be able to combine destination and subfolder with normal templates', function(){
     remove_templates();
     template_saver.save_normal_templates(); 
     assert.equal(fs.readFileSync('test/generated/normal3/normal4.js',"utf8"), "Executed normal template"+random);
+  });
+
+  it('should save duplicated templates according to the destination param', function(){
+    remove_templates();
+    template_saver.save_duplicated_templates();
+    assert.equal(fs.readFileSync('test/generated/models/Oven.js',"utf8"), "Oven template"+random);
+    assert.equal(fs.readFileSync('test/generated/models/Location.js',"utf8"), "Location template"+random);
+    assert.equal(fs.readFileSync('test/generated/models/Part.js',"utf8"), "Part template"+random);
+  });
+
+  it('should work with duplicated templates in subfolder', function(){
+    remove_templates();
+    template_saver.save_duplicated_templates();
+    assert.equal(fs.readFileSync('test/generated/duplicated2/Oven.js',"utf8"), "Oven template"+random);
+    assert.equal(fs.readFileSync('test/generated/duplicated2/Location.js',"utf8"), "Location template"+random);
+    assert.equal(fs.readFileSync('test/generated/duplicated2/Part.js',"utf8"), "Part template"+random);
+  });
+
+  it('should be able to combine destination and subfolder with duplicated templates', function(){
+    remove_templates();
+    template_saver.save_duplicated_templates();
+    assert.equal(fs.readFileSync('test/generated/models2/Oven.js',"utf8"), "Oven template"+random);
+    assert.equal(fs.readFileSync('test/generated/models2/Location.js',"utf8"), "Location template"+random);
+    assert.equal(fs.readFileSync('test/generated/models2/Part.js',"utf8"), "Part template"+random);
   });
 
 });

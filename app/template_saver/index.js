@@ -59,7 +59,7 @@ Template_saver.prototype.create_folder_structure = function(path){
   if(path.indexOf('/') === -1) return this.destination;
   else{
     var splited = path.split('/');
-    var temp_path = this.destination;
+    var temp_path = this.destination.substring(0, this.destination.length - 1); //because i do not want / at the end
     for(var i = 0; i < splited.length-1; i++){  //-1 becuase the last one is the file itself
       if(!fs.existsSync(temp_path+'/'+splited[i])){ //create only if the folder does not exists
         fs.mkdirSync(temp_path+'/'+splited[i]);
