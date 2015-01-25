@@ -89,6 +89,27 @@ Template_saver.prototype.determine_file_name = function(path){
 };
 
 /**
+* function checks the passed file and removes lines which have only whitespaces
+* this is because underscore templates leave an empty line everytime there is a
+* code which is pretty annoying
+* @param {String} loaded file
+* @return {String}
+*/
+Template_saver.prototype.remove_lines_with_whitespaces = function(file){
+  var lines = file.split('\n');
+  var loop = lines.length;
+  while(loop--){
+    if(lines[loop].match(/^[ ]+$/i)) lines.splice(loop,1); 
+  }
+  var as_string_again = '';
+  for(var i = 0; i < lines.length; i++){
+    if(i !== 0) as_string_again = as_string_again + '\n' + lines[i];
+    else as_string_again = lines[i];
+  }
+  return as_string_again;
+};
+
+/**
 * function saves the normal templates
 */
 Template_saver.prototype.save_normal_templates = function() {
@@ -102,8 +123,8 @@ Template_saver.prototype.save_normal_templates = function() {
         new_file_name+'.'+new_file_suffix);
     }
     else folders = this.create_folder_structure(normal_template.path);
-    fs.writeFileSync(folders+new_file_name+'.'+new_file_suffix,
-      normal_template['executed_template'], 'utf8');
+    var without_whitespaces = this.remove_lines_with_whitespaces(normal_template['executed_template']);
+    fs.writeFileSync(folders+new_file_name+'.'+new_file_suffix, without_whitespaces, 'utf8');
   }
 };
 
