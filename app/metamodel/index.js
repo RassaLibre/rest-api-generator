@@ -91,6 +91,8 @@ metamodel.prototype.validate_properties_ = function(properties){
       }
       if(!_.isUndefined(properties[i].type.regex)){
         if(!_.isString(properties[i].type.regex)) return false;
+        var regEx = new RegExp(properties[i].type.regex,"g");
+        if(!_.isRegExp(regEx)) return false;
       } 
     }
     //if the property is type of integer, check the min and max
