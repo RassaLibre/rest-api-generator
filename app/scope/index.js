@@ -1,5 +1,6 @@
 var _ = require('underscore');
-
+var RandExp = require('randexp');
+var helpers = require('../scope_helpers');
 
 /**
 * The prototype represents scope on which all the templates will be executed
@@ -56,6 +57,8 @@ scope.prototype.register_scope_array = function(arr){
 scope.prototype.get_scope = function(){
   var scope = {};
   scope.model = this.model;
+  this.register_scope_array(helpers);
+  scope.randomizer = RandExp; //random string generator used in API blueprint
   return _.extend(scope, this.scope_variables_);
 };
 

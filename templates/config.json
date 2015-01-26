@@ -18,6 +18,9 @@
     "atomic" : [
       {
         "path" : "atomic.tmpl.js"
+      },
+      {
+        "path" : "blueprint/random_json_builder.tmpl.apib"
       }
     ],
     "duplicated" : [

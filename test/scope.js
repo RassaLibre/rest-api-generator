@@ -50,7 +50,7 @@ describe('Scope', function(){
     scope.register_scope_variable('fourth','Bernt');
     var returned_scope = scope.get_scope();
     assert.equal(typeof returned_scope, "object");
-    assert.equal(_.keys(returned_scope).length, 5);
+    assert.equal(_.keys(returned_scope).length, 7);
     assert.equal(_.isUndefined(returned_scope.model), false);
     assert.equal(returned_scope.first, "Tomas");
     assert.equal(returned_scope.second, "Tore");
