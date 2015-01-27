@@ -44,7 +44,7 @@ Template_Executor.prototype.execute_duplicated_templates = function(){
     }
     if(!_.isArray(temp_scope)) console.log('ERROR: duplicated templates - it is not an array');
     for(var j = 0; j < temp_scope.length; j++){ //for each in the scope (for exmaple for each model)
-      var new_scope = {};
+      var new_scope = {scope: this.scope};
       new_scope[this.duplicated_templates[i].reference] = temp_scope[j];  //save the model in the new scope based on the reference
       var executed_template = this.duplicated_templates[i]['template_function'](new_scope);
       if(_.isUndefined(this.duplicated_templates[i]['executed_templates'])) 

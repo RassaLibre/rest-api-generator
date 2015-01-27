@@ -8,7 +8,7 @@ describe('Scope Helpers', function(){
     assert.equal(typeof scope_helpers, "object");
   });
 
-  describe('get_model_by_name', function(){
+  describe('Model by Name (get_model_by_name)', function(){
 
     var get_model_by_name;
 

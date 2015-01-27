@@ -15,6 +15,13 @@ describe('Template_Executor', function(){
         "name_property" : "name",
         "destination" : "models/",
         "template_function" : _.template('something silly')
+      },{
+        "path" : "duplicated.tmpl.js",
+        "scope" : "model.models",
+        "reference" : "model",
+        "name_property" : "name",
+        "destination" : "models/",
+        "template_function" : _.template('possible to use <%= scope.atomic() %> templates')
       }];
     var normal_templates = [{
         "path" : "normal.tmpl.js",
@@ -32,28 +39,41 @@ describe('Template_Executor', function(){
       normal_templates, scope);
   });
 
-  it('should execute normal templates', function(){
-    template_executor.execute_normal_templates();
-    var normal_templates = template_executor.get_normal_templates();
-    assert.equal(normal_templates[0]['executed_template'], "something even more silly");
+  describe("Normal templates", function(){
+    
+    it('should execute normal templates', function(){
+      template_executor.execute_normal_templates();
+      var normal_templates = template_executor.get_normal_templates();
+      assert.equal(normal_templates[0]['executed_template'], "something even more silly");
+    });
+
+    it('should execute atomic templates in normal templates', function(){
+      template_executor.execute_normal_templates();
+      var normal_templates = template_executor.get_normal_templates();
+      assert.equal(normal_templates[1]['executed_template'], 'It is possible to use Atomic templates');
+    });
+
   });
 
-  it('should execute duplicated templates', function(){
-    template_executor.execute_duplicated_templates();
-    var duplicated_templates = template_executor.get_duplicated_templates();
-    assert.equal(duplicated_templates[0]['executed_templates']['Oven'],"something silly");
-  });
+  describe("Duplicated templates", function(){
 
-  it('should contain template for each model', function(){
-    template_executor.execute_duplicated_templates();
-    var duplicated_templates = template_executor.get_duplicated_templates();
-    assert.equal(Object.keys(duplicated_templates[0]['executed_templates']).length, 4);
-  });
+    it('should execute duplicated templates', function(){
+      template_executor.execute_duplicated_templates();
+      var duplicated_templates = template_executor.get_duplicated_templates();
+      assert.equal(duplicated_templates[0]['executed_templates']['Oven'],"something silly");
+    });
 
-  it('should execute atomic templates in normal templates', function(){
-    template_executor.execute_normal_templates();
-    var normal_templates = template_executor.get_normal_templates();
-    assert.equal(normal_templates[1]['executed_template'], 'It is possible to use Atomic templates');
+    it('should contain template for each model', function(){
+      template_executor.execute_duplicated_templates();
+      var duplicated_templates = template_executor.get_duplicated_templates();
+      assert.equal(Object.keys(duplicated_templates[0]['executed_templates']).length, 4);
+    });
+
+    it('should execute atomic template in the duplicated templates', function(){
+      template_executor.execute_duplicated_templates();
+      var duplicated_templates = template_executor.get_duplicated_templates();
+    });
+
   });
 
 });
