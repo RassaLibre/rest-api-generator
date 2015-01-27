@@ -43,20 +43,14 @@ describe('Scope', function(){
     assert.equal(res, false);  
   });
 
-  it('should return the complete scope', function(){
-    scope.register_scope_variable('first','Tomas');
-    scope.register_scope_variable('second','Tore');
-    scope.register_scope_variable('third','Tor-Inge');
-    scope.register_scope_variable('fourth','Bernt');
+  it('should return an object', function(){
     var returned_scope = scope.get_scope();
     assert.equal(typeof returned_scope, "object");
-    assert.equal(_.keys(returned_scope).length, 7);
-    assert.equal(_.isUndefined(returned_scope.model), false);
-    assert.equal(returned_scope.first, "Tomas");
-    assert.equal(returned_scope.second, "Tore");
-    assert.equal(returned_scope.third, "Tor-Inge");
-    assert.equal(returned_scope.fourth, "Bernt");  
   });
 
+  it('should contain the model',function(){
+    var returned_scope = scope.get_scope();
+    assert.equal(returned_scope.model, example_data);
+  });
 
 });
