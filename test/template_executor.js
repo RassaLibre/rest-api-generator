@@ -72,6 +72,7 @@ describe('Template_Executor', function(){
     it('should execute atomic template in the duplicated templates', function(){
       template_executor.execute_duplicated_templates();
       var duplicated_templates = template_executor.get_duplicated_templates();
+      assert.equal(duplicated_templates[1]['executed_templates']['Oven'],"possible to use Atomic templates");
     });
 
   });
