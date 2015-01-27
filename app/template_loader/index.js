@@ -6,14 +6,21 @@ var _ = require('underscore');
 * and managing the generation
 * @constructor
 * @param {String} template_path base path of the templates
+* @param {String} name of the template config file
 */
-var Template_Loader = function(template_path){
+var Template_Loader = function(template_path, config_file_name){
 
   /**
   * base template path
   * @type {String}
   */
   this.template_path = template_path;
+
+  /**
+  * name of the template config file
+  * @type {String}
+  */
+  this.config_file_name = config_file_name;
 
   /**
   * variable holds the configuration file which contains
@@ -47,7 +54,7 @@ var Template_Loader = function(template_path){
 * @return {Object} config file
 */
 Template_Loader.prototype.load_config_file = function(){
-  var config_string = fs.readFileSync(this.template_path+'config.json', "utf8");
+  var config_string = fs.readFileSync(this.template_path+this.config_file_name, "utf8");
   this.config = JSON.parse(config_string);
   return this.config;
 };

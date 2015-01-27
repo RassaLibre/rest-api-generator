@@ -17,7 +17,7 @@ var generate_handlers = {
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var scope = new Scope(model);
-      var template_loader = new Template_Loader(config.TEMPLATE_DIR, scope);
+      var template_loader = new Template_Loader(config.TEMPLATE_DIR, config.TEMPLATE_CONFIG_FILE_NAME);
       template_loader.load_config_file();
       template_loader.load_atomic_templates();
       template_loader.load_normal_templates();
