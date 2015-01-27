@@ -32,4 +32,57 @@ describe('Scope Helpers', function(){
 
   });
 
+  describe('Is Singular (is_singular_resource)',function(){
+
+    var is_singular;
+
+    beforeEach(function(){
+      is_singular = scope_helpers['is_singular_resource'];
+    });
+
+    it('should be defined', function(){
+      assert.equal(typeof is_singular, "function");
+    });
+
+    it('should return true', function(){
+      assert.equal(is_singular("ovens/:id","GET"), true); 
+      assert.equal(is_singular("ovens/:id","PUT"), true); 
+      assert.equal(is_singular("ovens","POST"), true);
+      assert.equal(is_singular("ovens/:id","DELETE"), true);  
+    });
+
+    it('should return false', function(){
+      assert.equal(is_singular("ovens","GET"), false);
+      assert.equal(is_singular("ovens","DELETE"), false);
+      assert.equal(is_singular("ovens/:id","POST"), false);
+      assert.equal(is_singular("ovens","PUT"), false);   
+    });
+
+  });
+
+  describe('Get Controller Name (get_controller_name)',function(){
+
+    var get_controller_name;
+
+    beforeEach(function(){
+      get_controller_name = scope_helpers['get_controller_name'];
+    });
+
+    it('should be defined', function(){
+      assert.equal(typeof get_controller_name, "function");
+    });
+
+    it('should return the correct name', function(){
+      assert.equal(get_controller_name("ovens/:id/parts","GET",":23"), "get_parts_in_ovens_23");
+      assert.equal(get_controller_name("ovens/:id/parts/:part_id","GET",":23"), "get_parts_in_ovens_23");
+      assert.equal(get_controller_name("ovens/:id","GET",":23"), "get_ovens_23");
+      assert.equal(get_controller_name("ovens","GET",":23"), "get_ovens_23");
+    });
+
+    it('should accept URLs with slash as a first character', function(){
+      assert.equal(get_controller_name("/ovens/:id/parts","GET",":23"), "get_parts_in_ovens_23");
+    });
+
+  });
+
 });

@@ -13,6 +13,18 @@
       },
       {
         "path" : "blueprint/blueprint.tmpl.apib"
+      },
+      {
+        "path" : "api/server.templ.js"
+      },
+      {
+        "path" : "api/README.md"
+      },
+      {
+        "path" : "api/package.json"
+      },
+      {
+        "path" : "api/app/routes/index.tmpl.js"
       }
     ],
     "atomic" : [
@@ -33,6 +45,12 @@
       },
       {
         "path" : "duplicated2/duplicated2.tmpl.js",
+        "scope" : "model.models",
+        "reference" : "model",
+        "name_property" : "name"
+      },
+      {
+        "path" : "api/app/routes/parts.tmpl.js",
         "scope" : "model.models",
         "reference" : "model",
         "name_property" : "name"
