@@ -14,7 +14,7 @@ describe('Template_Executor', function(){
         "reference" : "model",
         "name_property" : "name",
         "destination" : "models/",
-        "template_function" : _.template('something silly')
+        "template_function" : _.template('something silly <%= model.name %>')
       },{
         "path" : "duplicated.tmpl.js",
         "scope" : "model.models",
@@ -60,7 +60,7 @@ describe('Template_Executor', function(){
     it('should execute duplicated templates', function(){
       template_executor.execute_duplicated_templates();
       var duplicated_templates = template_executor.get_duplicated_templates();
-      assert.equal(duplicated_templates[0]['executed_templates']['Oven'],"something silly");
+      assert.equal(duplicated_templates[0]['executed_templates']['Oven'],"something silly Oven");
     });
 
     it('should contain template for each model', function(){
