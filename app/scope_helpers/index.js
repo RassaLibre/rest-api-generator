@@ -76,4 +76,11 @@ helpers["get_controller_name"] = function(url, method, id){
 // regex for addresses without param at the end: ^\/?[a-z_-]+\/?(\/\:[a-z_-]+\/[a-z_-]+\/?)*$
 // regex for nouns exept the first one: \/[:]{0}[a-z_-]+\/
 
+/**
+* /ovens- ^\/?[a-z-_]+\/?$
+* /ovens/:id- ^\/?[a-z-_]+\/:[a-z_-]+\/?$
+* /ovens/:id/parts- ^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$
+* /ovens/:id/parts/:id- ^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+\/:[a-z_-]+$
+*/
+
 module.exports = helpers;

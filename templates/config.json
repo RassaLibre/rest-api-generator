@@ -33,6 +33,18 @@
       },
       {
         "path" : "blueprint/random_json_builder.tmpl.apib"
+      },
+      {
+        "path" : "api/app/routes/set_GET_controller.tmpl.js"
+      },
+      {
+        "path" : "api/app/routes/set_DELETE_controller.tmpl.js"
+      },
+      {
+        "path" : "api/app/routes/set_POST_controller.tmpl.js"
+      },
+      {
+        "path" : "api/app/routes/set_PUT_controller.tmpl.js"
       }
     ],
     "duplicated" : [
