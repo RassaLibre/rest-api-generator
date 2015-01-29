@@ -28,7 +28,7 @@ Template_Beautifier.prototype.beautify_normal_templates = function(){
   for(var i = 0; i < this.normal_templates.length; i++){
     this.normal_templates[i]['executed_template'] = 
       beautify(this.normal_templates[i]['executed_template'],
-        { indent_size: 2, max_preserve_newlines: 4 });
+        { indent_size: 2, max_preserve_newlines: 4, jslint_happy: true });
   }
 };
 
@@ -43,7 +43,7 @@ Template_Beautifier.prototype.beautify_duplicated_templates = function(){
       var duplicate  = duplicates[j];
       this.duplicated_templates[i]['executed_templates'][duplicate] = 
       beautify(this.duplicated_templates[i]['executed_templates'][duplicate],
-        { indent_size: 2, max_preserve_newlines: 4 });
+        { indent_size: 2, max_preserve_newlines: 4, jslint_happy: true });
     }
   }
 };
