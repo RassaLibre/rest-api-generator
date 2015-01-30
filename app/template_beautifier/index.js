@@ -26,9 +26,12 @@ var Template_Beautifier = function(normal_templates, duplicated_templates){
 */
 Template_Beautifier.prototype.beautify_normal_templates = function(){
   for(var i = 0; i < this.normal_templates.length; i++){
-    this.normal_templates[i]['executed_template'] = 
-      beautify(this.normal_templates[i]['executed_template'],
-        { indent_size: 2, max_preserve_newlines: 4, jslint_happy: true });
+    //because we do not want to do it with the blueprint
+    if(_.last(_.last(this.normal_templates[i]['path'].split('/')).split('.') === "js")){
+      this.normal_templates[i]['executed_template'] = 
+        beautify(this.normal_templates[i]['executed_template'],
+          { indent_size: 2, max_preserve_newlines: 4, jslint_happy: true });
+    }
   }
 };
 

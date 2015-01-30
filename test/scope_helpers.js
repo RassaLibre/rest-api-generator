@@ -30,6 +30,21 @@ describe('Scope Helpers', function(){
       assert.equal(found_model, null);
     });
 
+    it('should return the model even with lower first letter', function(){
+      var found_model = get_model_by_name(example_data.models, "location");
+      assert.equal(found_model.name, "Location");
+    });
+
+    it('should return the model even with plural', function(){
+      var found_model = get_model_by_name(example_data.models, "Parts");
+      assert.equal(found_model.name, "Part");
+    });
+
+    it('should return the model even with lower first letter and plural', function(){
+      var found_model = get_model_by_name(example_data.models, "locations");
+      assert.equal(found_model.name, "Location");
+    });
+
   });
 
   describe('Is Singular (is_singular_resource)',function(){
@@ -81,6 +96,24 @@ describe('Scope Helpers', function(){
 
     it('should accept URLs with slash as a first character', function(){
       assert.equal(get_controller_name("/ovens/:id/parts","GET",":23"), "get_parts_in_ovens_23");
+    });
+
+  });
+
+  describe('Get latest param', function(){
+
+    var get_latest_param_name;
+
+    beforeEach(function(){
+      get_latest_param_name = scope_helpers['get_latest_param_name'];
+    });
+
+    //get_latest_param_name
+    it('should return the latest parameter name', function(){
+      assert.equal(get_latest_param_name("ovens/:id/parts"), "parts");
+      assert.equal(get_latest_param_name("ovens/:id/parts/:parts_id"), "parts");
+      assert.equal(get_latest_param_name("ovens/:id"), "ovens");
+      assert.equal(get_latest_param_name("ovens/"), "ovens");
     });
 
   });

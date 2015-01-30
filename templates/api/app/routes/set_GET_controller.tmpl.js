@@ -21,7 +21,10 @@
 <% } %>
 
 <% if((endpoint.type === "GET")&&(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/?$/i))){ %>
-
+<%
+  var parsed_url = scope.split_url(endpoint.url);
+  var param = parsed_url[1];
+%>
   /**
   * returns one <%=scope.pluralize.plural(model.name)%> 
   */
@@ -30,7 +33,7 @@
       if(err) console.log(err);
       else console.log("Connected correctly to server");
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
-      collection.findOne({_id : mongo.ObjectID(req.params.id)}, function(err, doc){
+      collection.findOne({_id : mongo.ObjectID(req.params.<%=param%>)}, function(err, doc){
         if(err) console.log(err);
         else console.log('found documents!');
         res.send(doc);
@@ -44,7 +47,9 @@
 
 <% if((endpoint.type === "GET")&&(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i))){ %>
 <%
-  var param = _.last(endpoint.url.split('/'))
+  var parsed_url = scope.split_url(endpoint.url);
+  var resource_ident = parsed_url[1];  //id
+  var param_name = parsed_url[2];
 %>
   /**
   * returns one part 
@@ -54,10 +59,10 @@
       if(err) console.log(err);
       else console.log("Connected correctly to server");
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
-      collection.findOne({_id : mongo.ObjectID(req.params.id)}, function(err, doc){
+      collection.findOne({_id : mongo.ObjectID(req.params.<%=resource_ident%>)}, function(err, doc){
         if(err) console.log(err);
         else console.log('found documents!');
-        res.send(doc.<%=param%>);
+        res.send(doc.<%=param_name%>);
         db.close();
       });
     });
@@ -67,12 +72,12 @@
 
 
 <% if((endpoint.type === "GET")&&(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+\/:[a-z_-]+$/i))){ %>
+
 <%
-  var splited = endpoint.url.split('/');
-  var url_param = _.last(splited);  // :parts_id
-  var url_param_array = url_param.replace(':','').split('_'); //["parts","id"]
-  var doc_param = url_param_array[0]; //parts
-  var ident = url_param_array[1];     //id
+  var parsed_url = scope.split_url(endpoint.url);
+  var resource_ident = parsed_url[1];  //id
+  var param_name = parsed_url[2]; //parts
+  var param_ident = parsed_url[3]; //parts_id
 %>
   /**
   * returns one part 
@@ -86,9 +91,9 @@
         if(err) console.log(err);
         else console.log('found documents!');
         var to_be_returned;
-        for(var i = 0; i < doc.<%=doc_param%>.length; i++){
-          if(doc.<%=doc_param%>[i].<%=ident%> === req.params.<%=doc_param%>_<%=ident%>){
-            to_be_returned = doc.<%=doc_param%>[i];
+        for(var i = 0; i < doc.<%=param_name%>.length; i++){
+          if(doc.<%=param_name%>[i].<%=resource_ident%> === req.params.<%=param_name%>_<%=resource_ident%>){
+            to_be_returned = doc.<%=param_name%>[i];
             break;
           }
         }

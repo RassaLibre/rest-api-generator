@@ -19,8 +19,37 @@ helpers["get_model_by_name"] = function(models, name){
       return models[i];
     }
   }
+  //if nothing try to upercase the first letter
+  var upercase_name = name.charAt(0).toUpperCase() + name.slice(1);
+  for(var i = 0; i < models.length; i++){
+    if(models[i].name === upercase_name){
+      return models[i];
+    }
+  }
+  //if still nothing, try to pluralize the name
+  for(var i = 0; i < models.length; i++){
+    if(pluralize.plural(models[i].name,2) === upercase_name){
+      return models[i];
+    }
+  }
   return null;
 };
+
+/**
+* function gats an url and goes throw the it from the end to the beginning
+*  and returns the first part of url which does not start with :
+* for example if 'ovens/:id/parts/:parts_id' are passed, 'parts' will be returned
+* @param {String} url
+* @param {String} 
+*/
+helpers["get_latest_param_name"] = function(url){
+  var splited = url.split('/');
+  var i = splited.length;
+  while(i--){
+    if((splited[i].indexOf(':') === -1)&&(splited[i].length)) return splited[i];
+  }
+  return null;
+}
 
 /**
 * function checks if the passed URL together with the passed method is
@@ -71,6 +100,20 @@ helpers["get_controller_name"] = function(url, method, id){
   }
   return name+"_"+id.substring(1);
 };
+
+/**
+* function splits the passed url according to slashes and returns it as an
+* array. It also cleans up double-dots from in parameters
+* @param {String} url (for example ovens/:id/parts/:parts_id)
+* @return {Array} (for example ['ovens','id','parts','parts_id'])
+*/
+helpers["split_url"] = function(url){
+  var splited = url.split('/');
+  for(var i = 0; i < splited.length; i++){
+    splited[i] = splited[i].replace(':','');
+  }
+  return splited;
+}
 
 // regex for addresses with param at the end: ^(\/?[a-z_-]+\/\:[a-z_-]+\/?)+$
 // regex for addresses without param at the end: ^\/?[a-z_-]+\/?(\/\:[a-z_-]+\/[a-z_-]+\/?)*$
