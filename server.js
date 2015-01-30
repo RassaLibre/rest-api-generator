@@ -22,6 +22,11 @@ exp.post('/generate/nodejs',routes.generate.nodejs);
 */
 exp.post('/generate/golang', routes.generate.golang);
 
+/**
+* endpoint for generating a NodeJS server and pushing it to GitHub
+*/
+exp.post('/github/nodejs', routes.github.nodejs);
+
 
 console.log('The application is listening at port 3000');
 exp.listen(3000);

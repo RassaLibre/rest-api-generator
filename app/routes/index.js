@@ -1,3 +1,4 @@
 module.exports = {
-  generate : require('./generate')
+  generate : require('./generate'),
+  github: require('./github')
 };
