@@ -8,6 +8,7 @@ var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var tgz = require('express-tgz');
+var clone = require("nodegit").Clone.clone;
 
 var generate_handlers = {
 
@@ -20,6 +21,13 @@ var generate_handlers = {
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var scope = new Scope(model);
+      /**
+      //cloning
+      clone(config.TEMPLATE_REPO, config.TEMPLATE_CLONE_TARGET, {ignoreCertErrors: 1}).done(function(repo){
+        console.log('I am here');
+        console.log(repo);
+      });
+      */
       //load the templates
       var template_loader = new Template_Loader(config.TEMPLATE_DIR, config.TEMPLATE_CONFIG_FILE_NAME);
       template_loader.load_config_file();

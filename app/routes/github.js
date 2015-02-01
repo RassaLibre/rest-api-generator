@@ -8,6 +8,7 @@ var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var git = require('gift');
+var clone = require('git-clone');
 
 var generate_handlers = {
 
@@ -48,23 +49,31 @@ var generate_handlers = {
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
       //init the git repository
-      
-      var repo = new git('generated/api/');
-      var branch_name = Date.now();
-      repo.create_branch(branch_name,function(err){
-        repo.branch(branch_name, function(err){
-          repo.add('-A',function(err){
-            console.log(err);
-            repo.commit("Generated: "+Date.now(),function(err){
-              console.log(err);
-              repo.remote_push("origin",branch_name,function(err){
-                console.log(err);
+      console.log('starting the git shit');
+
+      setTimeout(function(){
+
+        var repo = new git('generated/api/');
+        var branch_name = new Date();
+        branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
+        repo.create_branch(branch_name,function(err){
+          repo.branch(branch_name, function(err){
+            repo.add('-A',function(err){
+              if(err) console.log(err);
+              repo.commit("Generated: "+Date.now(),function(err){
+                if(err) console.log(err);
+                repo.remote_push("origin",branch_name,function(err){
+                  if(err) console.log(err);
+                  res.send('have no idea, look to the console');
+                });
               });
-            });
-          });  
-        });        
-      });
-      res.send('have no idea, look to the console');
+            });  
+          });        
+        });
+
+      },5000);
+
+
     }
   }
 

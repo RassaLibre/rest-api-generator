@@ -1,2 +1,2 @@
-#REST API Generator
-This API has been generated with my REST API generator. I know, it is nothing special. I am working on it. Damn...
+#REST API Generator Output
+This is the outcome of the generator. It creates a branch with a unique name and saves the result of the generation in the branch. The user can then merge the branch with master. This is a ultimate way how to manage updates the user has done to some generated version and wants them in the new one.
