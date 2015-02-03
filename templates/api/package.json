@@ -15,7 +15,8 @@
   "dependencies": {
     "body-parser": "^1.10.1",
     "express": "^4.11.0",
-    "mongodb": "^1.4.28"
+    "mongodb": "^1.4.28",
+    "underscore": "^1.7.0"
   },
   "licenses": [
     {

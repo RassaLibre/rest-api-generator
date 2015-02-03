@@ -1,6 +1,9 @@
+var error_handler = require('../Error_Map');
 var mongo = require('mongodb');
 var mongo_client = mongo.MongoClient;
-var mongo_url = 'mongodb://xxx:xxx@ds033831.mongolab.com:33831/master-thesis';
+var mongo_url = require('../Db')();
+var model = require('../models');
+var nested = require('../nested');
 
 var <%=model.name%>Controller = {
 
@@ -21,4 +24,4 @@ var <%=model.name%>Controller = {
 
 };
 
-module.exports = <%=model.name%>Controller;
+module.exports = partsController;
