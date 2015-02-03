@@ -48,7 +48,6 @@ Template_saver.prototype.save_duplicated_templates = function() {
         duplicated_template['executed_templates'][duplicate], 'utf8');
     }
   }
-  console.log('done with the duplicated templates');
 };
 
 /**
@@ -127,7 +126,6 @@ Template_saver.prototype.save_normal_templates = function() {
     var without_whitespaces = this.remove_lines_with_whitespaces(normal_template['executed_template']);
     fs.writeFileSync(folders+new_file_name+'.'+new_file_suffix, without_whitespaces, 'utf8');
   }
-  console.log('done with the normal templates');
 };
 
 module.exports = Template_saver;

@@ -9,6 +9,7 @@ var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var tgz = require('express-tgz');
 var clone = require("nodegit").Clone.clone;
+var rimraf = require('rimraf');
 
 var generate_handlers = {
 
@@ -21,6 +22,13 @@ var generate_handlers = {
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var scope = new Scope(model);
+      
+      //removes the folder into which the github repo with templates is
+      //cloned
+      rimraf(config.TEMPLATE_CLONE_TARGET, function(err){
+        console.log(err);
+      });
+
       /**
       //cloning
       clone(config.TEMPLATE_REPO, config.TEMPLATE_CLONE_TARGET, {ignoreCertErrors: 1}).done(function(repo){
@@ -28,6 +36,7 @@ var generate_handlers = {
         console.log(repo);
       });
       */
+
       //load the templates
       var template_loader = new Template_Loader(config.TEMPLATE_DIR, config.TEMPLATE_CONFIG_FILE_NAME);
       template_loader.load_config_file();

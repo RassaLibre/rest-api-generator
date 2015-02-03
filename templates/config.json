@@ -4,18 +4,10 @@
   "templates" : {
     "normal" : [
       {
-        "path" : "normal.tmpl.js",
-        "destination" : ""
-      },
-      {
-        "path" : "normal2/normal2.tmpl.js",
-        "destination" : "normal3/"
-      },
-      {
         "path" : "blueprint/blueprint.tmpl.apib"
       },
       {
-        "path" : "api/server.templ.js"
+        "path" : "api/server.tmpl.js"
       },
       {
         "path" : "api/README.md"
@@ -25,12 +17,39 @@
       },
       {
         "path" : "api/app/routes/index.tmpl.js"
+      },
+      {
+        "path" : "api/app/Db.js"
+      },
+      {
+        "path" : "api/app/Error_Map.js"
+      },
+      {
+        "path" : "api/app/models/index.tmpl.js"
+      },
+      {
+        "path" : "api/app/models/model.js"
+      },
+      {
+        "path" : "api/app/models/data_structure.tmpl.js"
+      },
+      {
+        "path" : "api/app/nested/index.js"
+      },
+      {
+        "path" : "api/app/nested/add_nested.js"
+      },
+      {
+        "path" : "api/app/nested/remove_nested.js"
+      },
+      {
+        "path" : "api/app/nested/update_nested.js"
+      },
+      {
+        "path" : "api/app/nested/get_nested.js"
       }
     ],
     "atomic" : [
-      {
-        "path" : "atomic.tmpl.js"
-      },
       {
         "path" : "blueprint/random_json_builder.tmpl.apib"
       },
@@ -45,24 +64,14 @@
       },
       {
         "path" : "api/app/routes/set_PUT_controller.tmpl.js"
+      },
+      {
+        "path" : "api/app/routes/query_selector.tmpl.js"
       }
     ],
     "duplicated" : [
       {
-        "path" : "duplicated.tmpl.js",
-        "scope" : "model.models",
-        "reference" : "model",
-        "name_property" : "name",
-        "destination" : "models/"
-      },
-      {
-        "path" : "duplicated2/duplicated2.tmpl.js",
-        "scope" : "model.models",
-        "reference" : "model",
-        "name_property" : "name"
-      },
-      {
-        "path" : "api/app/routes/parts.tmpl.js",
+        "path" : "api/app/routes/controller.tmpl.js",
         "scope" : "model.models",
         "reference" : "model",
         "name_property" : "name"

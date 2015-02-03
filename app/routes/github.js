@@ -50,30 +50,23 @@ var generate_handlers = {
       template_saver.save_normal_templates();
       //init the git repository
       console.log('starting the git shit');
-
-      setTimeout(function(){
-
-        var repo = new git('generated/api/');
-        var branch_name = new Date();
-        branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
-        repo.create_branch(branch_name,function(err){
-          repo.branch(branch_name, function(err){
-            repo.add('-A',function(err){
+      var repo = new git('generated/api/');
+      var branch_name = new Date();
+      branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
+      repo.create_branch(branch_name,function(err){
+        repo.branch(branch_name, function(err){
+          //repo.add('-A',function(err){
+            if(err) console.log(err);
+            repo.commit("Generated: "+Date.now(),{all: true},function(err){
               if(err) console.log(err);
-              repo.commit("Generated: "+Date.now(),function(err){
+              repo.remote_push("origin",branch_name,function(err){
                 if(err) console.log(err);
-                repo.remote_push("origin",branch_name,function(err){
-                  if(err) console.log(err);
-                  res.send('have no idea, look to the console');
-                });
+                res.send('have no idea, look to the console');
               });
-            });  
-          });        
-        });
-
-      },5000);
-
-
+            });
+          //});  
+        });        
+      });
     }
   }
 

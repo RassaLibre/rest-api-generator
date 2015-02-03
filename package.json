@@ -28,6 +28,7 @@
     "nodegit": "^0.2.7",
     "pluralize": "^1.1.2",
     "randexp": "^0.4.0",
+    "rimraf": "^2.2.8",
     "underscore": "^1.7.0"
   },
   "licenses": [

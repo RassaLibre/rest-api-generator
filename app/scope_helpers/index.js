@@ -115,6 +115,15 @@ helpers["split_url"] = function(url){
   return splited;
 }
 
+/**
+* function returns the passed param with a capital letter
+* @param {String} string
+* @return {String}
+*/
+helpers["capitalise_first_leter"] = function(string){
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // regex for addresses with param at the end: ^(\/?[a-z_-]+\/\:[a-z_-]+\/?)+$
 // regex for addresses without param at the end: ^\/?[a-z_-]+\/?(\/\:[a-z_-]+\/[a-z_-]+\/?)*$
 // regex for nouns exept the first one: \/[:]{0}[a-z_-]+\/
