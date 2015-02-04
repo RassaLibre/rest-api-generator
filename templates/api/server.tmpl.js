@@ -8,14 +8,15 @@ exp.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+<%
+_.each(scope.model.models, function(model){
+  _.each(model.endpoints, function(endpoint){
+%>
+exp.<%=endpoint.type.toLowerCase()%>('/<%=endpoint.url%>',routes.<%=model.name.toLowerCase()%>.<%= scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id) %>);
+<%
+  })
+})
+%>
 
-exp.get('/', function(req, res){res.send('hello world');});
-exp.get('/parts',routes.parts.getParts);
-exp.get('/parts/:id',routes.parts.getPart);
-exp.post('/parts',routes.parts.addPart);
-exp.put('/parts/:id',routes.parts.editPart);
-exp.delete('/parts/:id',routes.parts.deletePart);
-
-
-console.log('The application is listening at port 3000');
-exp.listen(3000);
+console.log('The application is listening at port 3001');
+exp.listen(3001);

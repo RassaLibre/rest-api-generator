@@ -19,7 +19,7 @@
         }
       );
     });
-  }
+  },
 
 <% } %>
 
@@ -50,7 +50,7 @@
         }
       );
     });
-  }
+  },
 
 <% } %>
 
@@ -115,7 +115,7 @@
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
       collection.findOne({_id : mongo.ObjectID(req.params.id)}, function(err, doc){
         if(err) console.log(err);
-        doc = nested.remove_nested(req.params.<%url_param_value%>, '<%=url_param_value.split('_')[0]%>', doc);
+        doc = nested.remove_nested(req.params.<%=url_param_value%>, '<%=url_param_value.split('_')[0]%>', doc);
         var query = {'<%=url_param%>' : doc.<%=url_param%>};
         collection.update(<%=query%>,
           {$set:query},

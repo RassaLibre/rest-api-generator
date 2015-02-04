@@ -104,7 +104,6 @@
         if(err) error_handler.send_error(res, 100);
           var to_be_returned = nested.get_nested('<%=param_ident.split('_')[1]%>', req.params.<%=param_ident%>, '<%=param_name%>', doc);
         res.send(to_be_returned);
-        else error_handler.send_error(res, 100);
         db.close();
       });
     });

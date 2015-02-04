@@ -31,9 +31,6 @@
         "path" : "api/app/models/model.js"
       },
       {
-        "path" : "api/app/models/data_structure.tmpl.js"
-      },
-      {
         "path" : "api/app/nested/index.js"
       },
       {
@@ -67,11 +64,20 @@
       },
       {
         "path" : "api/app/routes/query_selector.tmpl.js"
+      },
+      {
+        "path" : "api/app/models/field_properties.tmpl.js"
       }
     ],
     "duplicated" : [
       {
         "path" : "api/app/routes/controller.tmpl.js",
+        "scope" : "model.models",
+        "reference" : "model",
+        "name_property" : "name"
+      },
+      {
+        "path" : "api/app/models/data_structure.tmpl.js",
         "scope" : "model.models",
         "reference" : "model",
         "name_property" : "name"

@@ -102,12 +102,12 @@ Model.prototype.is_valid = function(){
 
       //I have no idea what to do here
       else if(this.fields[key].type === "array"){
-        console.log('pole');
+        if(!_.isArray(this[key])) return false;
       }
       
       //nor here
       else{
-        console.log('who the hell knows what');
+        if(typeof this[key] !== "object") return false;
       }
 
     }

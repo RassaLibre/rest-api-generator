@@ -24,4 +24,4 @@ var <%=model.name%>Controller = {
 
 };
 
-module.exports = partsController;
+module.exports = <%=model.name%>Controller;

@@ -1,0 +1,1 @@
+<% if(typeof value === 'string'){ %>'<%=value%>'<% } %><% if(typeof value === 'number'){ %><%=value%><% } %>

@@ -2,7 +2,6 @@ var express = require('express');
 var routes = require('./app/routes');
 var exp = express();
 var bodyParser = require('body-parser');
-var pluralize = require('pluralize');
 
 exp.use(bodyParser.json());         // to support JSON-encoded bodies
 exp.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -28,8 +27,6 @@ exp.post('/generate/golang', routes.generate.golang);
 */
 exp.post('/github/nodejs', routes.github.nodejs);
 
-
-console.log(pluralize.singular('parts'));
 
 console.log('The application is listening at port 3000');
 exp.listen(3000);
