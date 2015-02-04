@@ -54,7 +54,7 @@ if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i)){
       if(err) error_handler.send_error(res, 102);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
       collection.update({_id : mongo.ObjectID(req.params.id)},
-        { $addToSet: { <%=url_param%>: new_<%=model.name%> } }, function(err, result){
+        { $addToSet: { <%=url_param%>: new_<%=model.name%>.to_JSON() } }, function(err, result){
         if(err) error_handler.send_error(res, 100);
         res.send(new_<%=model.name%>.to_public(result));
         db.close();
