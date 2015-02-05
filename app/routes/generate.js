@@ -9,7 +9,7 @@ var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var tgz = require('express-tgz');
 var clone = require("nodegit").Clone.clone;
-var rimraf = require('rimraf');
+var rimraf = require('rimraf'); //remove folders with content
 
 var generate_handlers = {
 

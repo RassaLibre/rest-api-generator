@@ -27,6 +27,11 @@ exp.post('/generate/golang', routes.generate.golang);
 */
 exp.post('/github/nodejs', routes.github.nodejs);
 
+/**
+* generate random data and store them into the collections
+*/
+exp.post('/randomize/mongodb', routes.randomize.mongodb);
+
 
 console.log('The application is listening at port 3000');
 exp.listen(3000);
