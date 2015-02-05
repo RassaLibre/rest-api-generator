@@ -63,7 +63,7 @@ if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+\/:[a-z_-]+$/i)){
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
       collection.findOne(<%=query%>, function(err, doc){
         if(err) error_handler.send_error(res, 100);
-        doc = nested.update_nested(edited_<%=model.name%>.to_JSON(), req.params.<%=url_param_value%>, '<%=url_param%>', doc);
+        doc = nested.update_nested(edited_<%=model.name%>.to_JSON(), req.params.<%=url_param_value%>, '<%=url_param%>', doc, "_<%=url_param_value.split('_')[1]%>");
         var query = {'<%=url_param%>' : doc.<%=url_param%>};
         collection.update(<%=query%>,
           {$set:query},

@@ -4,13 +4,14 @@
 *    @param {number} id
 *    @param {string} param
 *    @param {object} data
+*    @param {string} compare_param_name which param should be @param id compared to
 *    @return {object} altered object
 */
-module.exports = function(update_obj, id, param, data){
+module.exports = function(update_obj, id, param, data, compare_param_name){
     var nested_array = data[param];
     if(nested_array.length){
         for(var i = 0; i < nested_array.length; i++){
-            if(nested_array[i].id === id){
+            if(nested_array[i][compare_param_name] == id){
                 //can be done with _ i think
                 for (var prop in update_obj) {
                     if (update_obj.hasOwnProperty(prop)) {

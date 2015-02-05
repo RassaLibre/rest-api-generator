@@ -9,8 +9,12 @@ function Model(){};
 */
 Model.prototype.assign = function(v){
   v = v || {};
+  var stored_id = v._id || null;
   // Filter allowed fields
   v = _.pick(v, _.keys(this.fields));
+  //if the ID has been sent too (happens with nested objects)
+  //store it in the result too
+  if(stored_id) v._id = stored_id;
   // Assign resulting object to this
   _.extend(this, v);
 };
@@ -45,6 +49,7 @@ Model.prototype.to_JSON = function(){
       to_be_returned[key] = this[key];
     }
   }
+  if(this._id) to_be_returned._id = this._id;
   return to_be_returned;
 };
 

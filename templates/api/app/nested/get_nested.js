@@ -8,9 +8,9 @@
 */
 module.exports = function(search_param, search_param_value, nested, data){
   var nested = data[nested];
-  if(nested){
+  if(nested.length){
     for(var i = 0; i < nested.length; i++){
-      if(nested[i][search_param] === search_param_value){
+      if(nested[i][search_param] == search_param_value){
         return nested[i];
       }
     }
