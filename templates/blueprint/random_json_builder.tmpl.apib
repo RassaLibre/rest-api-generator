@@ -52,12 +52,14 @@
               var found_model = scope.get_model_by_name(scope.model.models, property.type.value);
               value = "["+scope.random_json_builder({model: found_model, scope: scope})+", "
                          +scope.random_json_builder({model: found_model, scope: scope})+"]";
+              value = "{}";
             }
           }
         }
         else{
           var found_model = scope.get_model_by_name(scope.model.models, property.type.type);
           value = scope.random_json_builder({model: found_model, scope: scope});
+          value = "{}";
         }
       %>
         "<%= property.name %>" : <%= value %><% if(property.name !== last_one){ %>, <% }%>

@@ -20,7 +20,7 @@
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
       collection.insert(new_<%=model.name%>.to_JSON(), {}, function(err, result){
         if(err) error_handler.send_error(res, 100);
-        res.send(new_<%=model.name%>.to_public(result));
+        res.send(new_<%=model.name%>.to_public(result[0]));
         db.close();
       });
     });

@@ -116,6 +116,18 @@ helpers["split_url"] = function(url){
 }
 
 /**
+* function returns blueprint friendly URLs
+* it checks if the URL begins with '/' and if not, it adds it there
+* it checks if the URL ends with '/' and if so, it removes it
+* @param {string} url
+*/
+helpers["blueprint_friendly_url"] = function(url){
+  if(url.charAt(0) != '/') url = '/'+url;
+  if(url.charAt(url.length-1) == '/') url = url.substring(0, url.length - 1);
+  return url;
+};
+
+/**
 * function returns the passed param with a capital letter
 * @param {String} string
 * @return {String}
