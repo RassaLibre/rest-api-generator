@@ -51,6 +51,12 @@
         "path" : "blueprint/random_json_builder.tmpl.apib"
       },
       {
+        "path" : "blueprint/single_GET_request.tmpl.apib"
+      },
+      {
+        "path" : "blueprint/array_GET_request.tmpl.apib"
+      },
+      {
         "path" : "api/app/routes/set_GET_controller.tmpl.js"
       },
       {

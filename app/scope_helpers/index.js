@@ -1,5 +1,5 @@
 var pluralize = require('pluralize');
-
+var _ = require('underscore');
 
 /**
 * array because there is a method in scope for adding such arrays to the scope
@@ -119,13 +119,52 @@ helpers["split_url"] = function(url){
 * function returns blueprint friendly URLs
 * it checks if the URL begins with '/' and if not, it adds it there
 * it checks if the URL ends with '/' and if so, it removes it
+* it also reformats the parameters so instead of : they are enclosed in {}
 * @param {string} url
 */
 helpers["blueprint_friendly_url"] = function(url){
   if(url.charAt(0) != '/') url = '/'+url;
   if(url.charAt(url.length-1) == '/') url = url.substring(0, url.length - 1);
+  var splited = url.split('/');
+  for(var i = 0; i < splited.length; i++){
+    if(splited[i].indexOf(':') > -1){
+      splited[i] = '{'+splited[i].replace(':','')+'}';
+    }
+  }
+  url = splited.join('/');
   return url;
 };
+
+
+/**
+*
+*/
+helpers["get_parameter_names"] = function(url){
+  var splited = url.split('/');
+  var params = [];
+  for(var i = 0; i < splited.length; i++){
+    if(splited[i].indexOf(':') > -1) params.push(splited[i].replace(':',''));
+  }
+  return params;
+};
+
+
+/**
+* function gets the model and returns the endpoints in a blueprint friendly
+* way. This function is only used in the blueprint template
+* @param {Object} model
+* @return {Array}
+*/
+helpers['blueprint_friendly_models'] = function(model){
+  var formated_endpoints = [];
+  for(var i = 0; i < model.endpoints.length; i++){
+    if(_.isUndefined(formated_endpoints[model.endpoints[i].url])){
+      formated_endpoints[model.endpoints[i].url] = [];
+    }
+    formated_endpoints[model.endpoints[i].url].push(model.endpoints[i]);
+  }
+  return formated_endpoints;
+}
 
 /**
 * function returns the passed param with a capital letter

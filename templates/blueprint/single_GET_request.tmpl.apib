@@ -1,0 +1,19 @@
++ Parameters
+        <%
+          /**
+          * get the param names and list them
+          */
+          var param_names = scope.get_parameter_names(endpoint.url);
+          _.each(param_names, function(param){
+        %>
+    + <%=param%> (required, string, `54d0c00be9cc9063148461e6`)
+        <%
+          });
+        %>
+
+### get one single <%=model.name%> [<%=endpoint.type%>]
++ Response 200 (application/json)
+
+    + Body
+
+            {"message" : "TODO"}
