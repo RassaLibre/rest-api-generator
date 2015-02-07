@@ -57,6 +57,15 @@
         "path" : "blueprint/array_GET_request.tmpl.apib"
       },
       {
+        "path" : "blueprint/POST_request.tmpl.apib"
+      },
+      {
+        "path" : "blueprint/endpoint_parameters.tmpl.apib"
+      },
+      {
+        "path" : "blueprint/PUT_request.tmpl.apib"
+      },
+      {
         "path" : "api/app/routes/set_GET_controller.tmpl.js"
       },
       {

@@ -1,0 +1,23 @@
+### edit <%=model.name%> [<%=endpoint.type%>]
++ Request (application/json)
+<%
+  /**
+  * because there are addresses like /ovens/:id/parts where parts should be
+  * returned and not ovens, I need to search for the correct model based on URL
+  */
+  var model_name = scope.get_latest_param_name(key);
+  var correct_model = scope.get_model_by_name(scope.model.models, model_name);
+  var param_to_be_edited = correct_model.properties[0];
+  var fake_model = {properties: [param_to_be_edited]};
+%>
+<% 
+  var random_data =  scope.random_json_builder({model: fake_model, scope: scope});
+  var JSON_random_data = JSON.parse(random_data);
+  delete JSON_random_data._id;
+  var string_random_data = JSON.stringify(JSON_random_data, undefined, 4);
+%>
+<%=string_random_data%>
+
++ Response 200 (application/json; charset=utf-8)
+
+{"number_of_edited_rows" : 1}

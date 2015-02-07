@@ -175,6 +175,41 @@ helpers["capitalise_first_leter"] = function(string){
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+/**
+* function returns valid IDs which is used in the blueprint generator
+* so Dredd can use real IDs to test the URLs
+* @param {String} url in the blueprint friendly format
+* @param {String} param
+* @return {String}
+*/
+helpers["get_valid_url_params"] = function(url, param){
+  var data = {
+    "ovens/:id" : {
+      "id" : "54d10585e4b00a11b540d01b"
+    },
+    "pallets/:id" : {
+      "id" : "54d0bf38e9cc9063148461e5"
+    },
+    "pallets/:id/parts" : {
+      "id" : "54d0bf38e9cc9063148461e5"
+    },
+    "pallets/:id/parts/:part_id" : {
+      "id" : "54d0bf38e9cc9063148461e5",
+      "part_id" : "54d3e26b09d8c002113b0c6e"
+    },
+    "locations/:id" : {
+      "id" : "54d10385e4b00a11b540cfff"
+    },
+    "parts/:id" : {
+      "id" : "54d3d1d4a554e10f0be08900"
+    },
+    "parts/:id/pallets" : {
+      "id" : "54d3d1d4a554e10f0be08900"
+    }
+  };
+  return data[url][param];
+}
+
 // regex for addresses with param at the end: ^(\/?[a-z_-]+\/\:[a-z_-]+\/?)+$
 // regex for addresses without param at the end: ^\/?[a-z_-]+\/?(\/\:[a-z_-]+\/[a-z_-]+\/?)*$
 // regex for nouns exept the first one: \/[:]{0}[a-z_-]+\/

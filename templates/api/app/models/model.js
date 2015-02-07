@@ -102,7 +102,7 @@ Model.prototype.is_valid = function(){
       else if(this.fields[key].type === "geojson"){
         if(typeof this[key] !== "object") return false;
         if(!this[key].coordinates) return false;
-        if(!this[key].geometry) return false;
+        if(!this[key].type) return false;
       }
 
       //I have no idea what to do here

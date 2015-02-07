@@ -1,0 +1,16 @@
+        <%
+          /**
+          * get the param names and list them
+          */
+          var param_names = scope.get_parameter_names(endpoint);
+          if(param_names.length){
+        %>
++ Parameters
+        <%
+          }
+          _.each(param_names, function(param){
+        %>
+    + <%=param%> (required, string, `<%=scope.get_valid_url_params(endpoint, param)%>`)
+        <%
+          });
+        %>

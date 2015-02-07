@@ -101,8 +101,11 @@
       if(err) error_handler.send_error(res, 102);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
       collection.findOne(<%=query%>, function(err, doc){
-        if(err) error_handler.send_error(res, 100);
-          var to_be_returned = nested.get_nested('_<%=param_ident.split('_')[1]%>', req.params.<%=param_ident%>, '<%=param_name%>', doc);
+        if((err)||(!doc)){
+          error_handler.send_error(res, 100);
+          return;
+        }
+        var to_be_returned = nested.get_nested('_<%=param_ident.split('_')[1]%>', req.params.<%=param_ident%>, '<%=param_name%>', doc);
         res.send(to_be_returned);
         db.close();
       });
