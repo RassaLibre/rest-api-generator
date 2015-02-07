@@ -66,6 +66,9 @@
         "path" : "blueprint/PUT_request.tmpl.apib"
       },
       {
+        "path" : "blueprint/DELETE_request.tmpl.apib"
+      },
+      {
         "path" : "api/app/routes/set_GET_controller.tmpl.js"
       },
       {

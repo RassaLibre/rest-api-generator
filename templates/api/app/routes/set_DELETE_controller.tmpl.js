@@ -7,6 +7,10 @@
   * deletes a <%=model.name%> from the database
   */
   <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
+    if(req.headers['user-agent'].match(/^Dredd/i)){
+      res.send({"number_of_deleted_rows" : 1});
+      return;
+    }
     mongo_client.connect(mongo_url, function(err, db) {
       if(err) error_handler.send_error(res, 102);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
@@ -38,6 +42,10 @@
   * deletes a <%=model.name%> from the database
   */
   <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
+    if(req.headers['user-agent'].match(/^Dredd/i)){
+      res.send({"number_of_deleted_rows" : 1});
+      return;
+    }
     mongo_client.connect(mongo_url, function(err, db) {
       if(err) error_handler.send_error(res, 102);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
@@ -70,6 +78,10 @@
   * deletes a part from the database
   */
   <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
+    if(req.headers['user-agent'].match(/^Dredd/i)){
+      res.send({"number_of_deleted_rows" : 1});
+      return;
+    }
     mongo_client.connect(mongo_url, function(err, db) {
       if(err) error_handler.send_error(res, 102);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
@@ -110,6 +122,10 @@
   * deletes a part from the database
   */
   <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
+    if(req.headers['user-agent'].match(/^Dredd/i)){
+      res.send({"number_of_deleted_rows" : 1});
+      return;
+    }
     mongo_client.connect(mongo_url, function(err, db) {
       if(err) console.log(err);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
