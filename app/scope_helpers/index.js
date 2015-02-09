@@ -135,9 +135,25 @@ helpers["blueprint_friendly_url"] = function(url){
   return url;
 };
 
+/**
+* function returns boolean based on if the passed param is one of the
+* props name or not
+* @param {Array} props
+* @param {String} param
+* @return {Boolean}
+*/
+helpers["is_valid_prop_name"] = function(props, param){
+  for(var i = 0; i < props.length; i++){
+    if(props[i].name === param) return true;
+  }
+  return false;
+}
 
 /**
-*
+* receives an URL and returns the parts of the URL as an array
+* it also filters the : when params occure
+* @param {String} url
+* @return {Array}
 */
 helpers["get_parameter_names"] = function(url){
   var splited = url.split('/');

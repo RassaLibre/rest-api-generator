@@ -51,8 +51,10 @@
 
 
 <%
-  //if the endpoint matches for example "ovens/:id/parts"
-  if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i)){
+  //if the endpoint matches for example "ovens/:id/parts" and "parts"
+  //is a valid property of the model
+  if((endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i))&&
+     (scope.is_valid_prop_name(model.properties, _.last(endpoint.url.split('/'))))){
 %>
 <%
   //parse the url and get the parameter name
@@ -78,6 +80,20 @@
   },
 
 <% } %>
+
+<%
+  //if the endpoint matches for example "ovens/:id/parts" and "parts"
+  //is NOT a valid property of the model
+  if((endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i))&&
+     (!scope.is_valid_prop_name(model.properties, _.last(endpoint.url.split('/'))))){
+%>
+
+  <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
+    res.status(500).send("Not implemented");
+  },
+
+<% } %>
+
 
 
 <%

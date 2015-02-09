@@ -118,4 +118,19 @@ describe('Scope Helpers', function(){
 
   });
 
+  describe('Find URL param in properties', function(){
+
+    var is_valid_prop_name;
+
+    beforeEach(function(){
+      is_valid_prop_name = scope_helpers['is_valid_prop_name'];
+    });
+
+    it('should find the string in the properties', function(){
+      assert.equal(is_valid_prop_name(example_data.models[0].properties, "status"), true);
+      assert.equal(is_valid_prop_name(example_data.models[0].properties, "tomas"), false);
+    });
+
+  });
+
 });

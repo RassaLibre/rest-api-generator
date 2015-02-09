@@ -25,6 +25,7 @@
     "express-tgz": "0.0.3",
     "gift": "^0.5.0",
     "js-beautify": "^1.5.4",
+    "mongodb": "^1.4.30",
     "nodegit": "^0.2.7",
     "pluralize": "^1.1.2",
     "randexp": "^0.4.0",
