@@ -55,6 +55,7 @@ var generate_handlers = {
       branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
       repo.create_branch(branch_name,function(err){
         repo.branch(branch_name, function(err){
+          repo.diff(['name-only'])
           /**
           repo.add('-A',function(err){
             if(err) console.log(err);
