@@ -9,6 +9,7 @@ var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var git = require('gift');
 var clone = require('git-clone');
+var exec = require('child_process').exec;
 
 var generate_handlers = {
 
@@ -49,13 +50,13 @@ var generate_handlers = {
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
       //init the git repository
-      console.log('starting the git shit');
       var repo = new git('generated/api/');
       var branch_name = new Date();
       branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
       repo.create_branch(branch_name,function(err){
         repo.branch(branch_name, function(err){
-          //repo.add('-A',function(err){
+          /**
+          repo.add('-A',function(err){
             if(err) console.log(err);
             repo.commit("Generated: "+Date.now(),{all: true},function(err){
               if(err) console.log(err);
@@ -64,7 +65,8 @@ var generate_handlers = {
                 res.send('have no idea, look to the console');
               });
             });
-          //});  
+          }); 
+          **/
         });        
       });
     }
