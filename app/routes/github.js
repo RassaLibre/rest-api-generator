@@ -51,12 +51,32 @@ var generate_handlers = {
       template_saver.save_normal_templates();
       //init the git repository
       var repo = new git('generated/api/');
+      var options = {}, args = ["--name-only"];
+      repo.git("diff", options, args, function(err, stdout, stderr) {
+        console.log(stdout);
+        repo.add(stdout,function(err){
+          console.log(err);
+        });
+      });
+
+      setTimeout(function(){
+
+        repo.commit("Generated: "+Date.now(),function(err){
+          if(err) console.log(err);
+          repo.remote_push("origin","master",function(err){
+            if(err) console.log(err);
+            res.send('have no idea, look to the console');
+          });
+        });
+
+      },2000);
+      
+          /**
       var branch_name = new Date();
       branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
       repo.create_branch(branch_name,function(err){
         repo.branch(branch_name, function(err){
-          repo.diff(['name-only'])
-          /**
+
           repo.add('-A',function(err){
             if(err) console.log(err);
             repo.commit("Generated: "+Date.now(),{all: true},function(err){
@@ -67,9 +87,10 @@ var generate_handlers = {
               });
             });
           }); 
-          **/
+          
         });        
       });
+**/
     }
   }
 
