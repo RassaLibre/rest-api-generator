@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var Abstract_Metamodel = require('./abstract_metamodel');
 
 /**
 * metamodel of the possed input. This prototype is responsible for validating
@@ -38,6 +39,8 @@ var metamodel = function(){
   this.array_value_primitive_types_ = ["integer", "string", "double"];
 
 };
+metamodel.prototype = new Abstract_Metamodel();
+metamodel.prototype.constructor = metamodel;
 
 /**
 * function validates the incoming data according to the standartized format

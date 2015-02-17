@@ -1,2 +1,2 @@
 #GENERATED REST API
-Generated API from the generator
+Generated API from the generator. Improooooov...
