@@ -18,11 +18,6 @@ exp.get('/', function(req, res){
 exp.post('/generate/nodejs',routes.generate.nodejs);
 
 /**
-* endpoint for generating a Golang server
-*/
-exp.post('/generate/golang', routes.generate.golang);
-
-/**
 * endpoint for generating a NodeJS server and pushing it to GitHub
 */
 exp.post('/github/nodejs', routes.github.nodejs);
@@ -31,6 +26,12 @@ exp.post('/github/nodejs', routes.github.nodejs);
 * generate random data and store them into the collections
 */
 exp.post('/randomize/mongodb', routes.randomize.mongodb);
+
+
+exp.post('/github-to-github',routes.github_to_github.nodejs);
+exp.post('/github-to-zip',routes.github_to_zip.nodejs);
+exp.post('/folder-to-github',routes.folder_to_github.nodejs);
+exp.post('/folder-to-zip',routes.folder_to_zip.nodejs);
 
 
 console.log('The application is listening at port 3000');

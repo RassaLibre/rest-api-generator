@@ -7,9 +7,9 @@ var Template_Loader = require('../template_loader');
 var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
-var git = require('gift');
-var clone = require('git-clone');
-var exec = require('child_process').exec;
+var tgz = require('express-tgz');
+var clone = require("nodegit").Clone.clone;
+var rimraf = require('rimraf'); //remove folders with content
 
 var generate_handlers = {
 
@@ -22,6 +22,21 @@ var generate_handlers = {
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var scope = new Scope(model);
+      
+      //removes the folder into which the github repo with templates is
+      //cloned
+      rimraf(config.TEMPLATE_CLONE_TARGET, function(err){
+        console.log(err);
+      });
+
+      /**
+      //cloning
+      clone(config.TEMPLATE_REPO, config.TEMPLATE_CLONE_TARGET, {ignoreCertErrors: 1}).done(function(repo){
+        console.log('I am here');
+        console.log(repo);
+      });
+      */
+
       //load the templates
       var template_loader = new Template_Loader(config.TEMPLATE_DIR, config.TEMPLATE_CONFIG_FILE_NAME);
       template_loader.load_config_file();
@@ -49,55 +64,11 @@ var generate_handlers = {
       var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
-      //init the git repository
-      var repo = new git('generated/api/');
-      var changes = false;  //flag indicates if there are any files with change, if so uload to github
-      var options = {}, args = ["--name-only"];
-      repo.git("diff", options, args, function(err, stdout, stderr) {
-        if(stdout) changes = true;
-        console.log(stdout);
-        repo.add(stdout,function(err){
-          console.log(err);
-        });
-      });
-
-
-      setTimeout(function(){
-        if(changes){  //upload to github only if there were changes
-          repo.commit("Generated: "+Date.now(),function(err){
-            if(err) console.log(err);
-            repo.remote_push("origin","master",function(err){
-              if(err) console.log(err);
-              res.send('have no idea, look to the console');
-            });
-          });
-        }
-        else res.send('There were no changes so no GitHub');
-      },2000);
-      
-          /**
-      var branch_name = new Date();
-      branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
-      repo.create_branch(branch_name,function(err){
-        repo.branch(branch_name, function(err){
-
-          repo.add('-A',function(err){
-            if(err) console.log(err);
-            repo.commit("Generated: "+Date.now(),{all: true},function(err){
-              if(err) console.log(err);
-              repo.remote_push("origin",branch_name,function(err){
-                if(err) console.log(err);
-                res.send('have no idea, look to the console');
-              });
-            });
-          }); 
-          
-        });        
-      });
-**/
+      res.send('have no idea, look to the console');
+      //res.tgz('generated/', 'api.tar.gz', false);
     }
   }
-
+  
 };
 
 module.exports = generate_handlers;

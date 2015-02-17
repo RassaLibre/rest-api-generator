@@ -49,21 +49,53 @@ var generate_handlers = {
       var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
-      //init the git repository
+
+
       var repo = new git('generated/api/');
-      var changes = false;  //flag indicates if there are any files with change, if so uload to github
-      var options = {}, args = ["--name-only"];
-      repo.git("diff", options, args, function(err, stdout, stderr) {
-        if(stdout) changes = true;
-        console.log(stdout);
-        repo.add(stdout,function(err){
-          console.log(err);
+      repo.branch("master",function(err){
+
+        var branch_name = new Date();
+        branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
+        repo.create_branch(branch_name,function(err){
+          repo.branch(branch_name, function(err){
+
+            var changes = false;  //flag indicates if there are any files with change, if so uload to github
+            var options = {}, args = ["--name-only"];
+            repo.git("diff", options, args, function(err, stdout, stderr) {
+              changes = true;
+              console.log(stdout);
+              repo.add(stdout,function(err){
+                console.log(err);
+              });
+            });
+
+            setTimeout(function(){
+              if(changes){
+                repo.commit("Generated: "+Date.now(),function(err){
+                  if(err) console.log(err);
+                  repo.remote_push("origin",branch_name,function(err){
+                    if(err) console.log(err);
+                    res.send('have no idea, look to the console');
+                  });
+                });
+              }
+              else{
+                res.send('no change, no github, remove the brunch');
+              }
+            },2000);
+
+          });        
         });
+
       });
 
 
-      setTimeout(function(){
-        if(changes){  //upload to github only if there were changes
+      
+          /**
+      var branch_name = new Date();
+      branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
+      repo.create_branch(branch_name,function(err){
+        repo.branch(branch_name, function(err){
           repo.commit("Generated: "+Date.now(),function(err){
             if(err) console.log(err);
             repo.remote_push("origin","master",function(err){
@@ -71,27 +103,6 @@ var generate_handlers = {
               res.send('have no idea, look to the console');
             });
           });
-        }
-        else res.send('There were no changes so no GitHub');
-      },2000);
-      
-          /**
-      var branch_name = new Date();
-      branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
-      repo.create_branch(branch_name,function(err){
-        repo.branch(branch_name, function(err){
-
-          repo.add('-A',function(err){
-            if(err) console.log(err);
-            repo.commit("Generated: "+Date.now(),{all: true},function(err){
-              if(err) console.log(err);
-              repo.remote_push("origin",branch_name,function(err){
-                if(err) console.log(err);
-                res.send('have no idea, look to the console');
-              });
-            });
-          }); 
-          
         });        
       });
 **/
