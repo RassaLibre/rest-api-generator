@@ -39,6 +39,10 @@ var metamodel = function(){
   this.array_value_primitive_types_ = ["integer", "string", "double"];
 
 };
+
+/**
+* inherit the abstract metamodel
+*/
 metamodel.prototype = new Abstract_Metamodel();
 metamodel.prototype.constructor = metamodel;
 

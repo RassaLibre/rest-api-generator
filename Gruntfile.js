@@ -35,7 +35,6 @@ module.exports = function(grunt) {
   //http
   grunt.loadNpmTasks('grunt-http');
 
-
   // Default task(s).
   grunt.registerTask('development', ['http','watch']);
 
