@@ -10,6 +10,7 @@ var Template_Beautifier = require('../template_beautifier');
 var tgz = require('express-tgz');
 var clone = require("nodegit").Clone.clone;
 var rimraf = require('rimraf'); //remove folders with content
+var error_handler = require('../Error_Map');
 
 var generate_handlers = {
 
@@ -67,6 +68,7 @@ var generate_handlers = {
       res.send('have no idea, look to the console');
       //res.tgz('generated/', 'api.tar.gz', false);
     }
+    else error_handler.send_error(res, 100);
   },
 
   /**
