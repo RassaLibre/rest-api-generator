@@ -44,6 +44,9 @@
       },
       {
         "path" : "api/app/nested/get_nested.js"
+      },
+      {
+        "path" : "api/test/nested.js"
       }
     ],
     "atomic" : [

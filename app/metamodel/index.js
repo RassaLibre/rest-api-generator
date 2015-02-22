@@ -145,6 +145,7 @@ metamodel.prototype.validate_endpoints_ = function(endpoints){
     if(!_.isString(endpoints[i].id)) return false;
     if(!_.isString(endpoints[i].type)) return false;
     if(!_.isString(endpoints[i].url)) return false;
+    if(endpoints[i].url.match("^\/.*")) return false; //no slash at the beginning allowed
     if(_.indexOf(this.allowed_http_methods_, endpoints[i].type) === -1)
       return false;        
   }

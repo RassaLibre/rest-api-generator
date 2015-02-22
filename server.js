@@ -8,6 +8,14 @@ exp.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+exp.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+  next();
+});
+
+exp.use(express.static(__dirname + '/compressed'));
+
 exp.get('/', function(req, res){
   res.send('REST API generator');
 });
