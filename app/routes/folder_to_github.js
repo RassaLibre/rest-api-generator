@@ -24,8 +24,10 @@ var generate_handlers = {
       var repo = new git('generated/api/');
       var branch_name = new Date();
       branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
+      //create branch
       repo.create_branch(branch_name,function(err){
         if(err) console.log(err);
+        //switch to that branch
         repo.checkout(branch_name, function(err){
           if(err) console.log(err);
           var scope = new Scope(model);
