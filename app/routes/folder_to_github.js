@@ -21,7 +21,7 @@ var generate_handlers = {
     var model = req.body;
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
-      var repo = new git('generated/api/');
+      var repo = new git(config.OUTPUT_GIT_FOLDER);
       var branch_name = new Date();
       branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
       //create branch

@@ -28,7 +28,7 @@ var generate_handlers = {
         //clone the repo
         clone(config.TEMPLATE_REPO, config.TEMPLATE_CLONE_TARGET, {ignoreCertErrors: 1}).done(function(cloned_repo){
           //get the repo in generated
-          var repo = new git('generated/api/');
+          var repo = new git(config.OUTPUT_GIT_FOLDER);
           //get a branch name
           var branch_name = new Date();
           branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
