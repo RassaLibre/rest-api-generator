@@ -17,7 +17,7 @@
         db.close();
       });
     });
-  },  
+  },
 
 <% } %>
 
@@ -32,7 +32,7 @@
   var query = scope.query_selector({ident: param});
 %>
   /**
-  * returns one <%=model.name%>  
+  * returns one <%=model.name%>
   */
   <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
     mongo_client.connect(mongo_url, function(err, db) {
@@ -64,7 +64,7 @@
   var query = scope.query_selector({ident: resource_ident});
 %>
   /**
-  * returns param from <%=model.name%> 
+  * returns param from <%=model.name%>
   */
   <%=scope.get_controller_name(endpoint.url, endpoint.type, endpoint.id)%>: function(req, res){
     mongo_client.connect(mongo_url, function(err, db) {

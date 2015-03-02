@@ -37,8 +37,7 @@ Template_saver.prototype.save_duplicated_templates = function() {
     var new_file_suffix = this.determine_file_suffix(duplicated_template.path);
     var folders;
     if(!_.isUndefined(duplicated_template.destination)){  //if the destination is defined
-      folders = this.create_folder_structure(duplicated_template.destination+'.'
-        +new_file_suffix);
+      folders = this.create_folder_structure(duplicated_template.destination+'.'+new_file_suffix);
     }
     else folders = this.create_folder_structure(duplicated_template.path);
     var duplicates = Object.keys(duplicated_template['executed_templates']);    //keys like "Oven","Part"
@@ -58,9 +57,9 @@ Template_saver.prototype.save_duplicated_templates = function() {
 Template_saver.prototype.create_folder_structure = function(path){
   if(path.indexOf('/') === -1) return this.destination;
   else{
-    var splited = path.split('/');
+    var splited = path.split('/');  //split the path
     var temp_path = this.destination.substring(0, this.destination.length - 1); //because i do not want / at the end
-    for(var i = 0; i < splited.length-1; i++){  //-1 becuase the last one is the file itself
+    for(var i = 0; i < splited.length-1; i++){  //-1 because the last one is the file itself or it is empty because destination ends with suffix
       if(!fs.existsSync(temp_path+'/'+splited[i])){ //create only if the folder does not exists
         fs.mkdirSync(temp_path+'/'+splited[i]);
       }
@@ -99,7 +98,7 @@ Template_saver.prototype.remove_lines_with_whitespaces = function(file){
   var lines = file.split('\n');
   var loop = lines.length;
   while(loop--){
-    if(lines[loop].match(/^[ ]+$/i)) lines.splice(loop,1); 
+    if(lines[loop].match(/^[ ]+$/i)) lines.splice(loop,1);
   }
   var as_string_again = '';
   for(var i = 0; i < lines.length; i++){

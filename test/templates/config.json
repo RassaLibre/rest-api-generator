@@ -5,7 +5,7 @@
     "normal" : [
       {
         "path" : "normal.tmpl.js",
-        "destination" : ""
+        "destination" : "stuff/"
       }
     ],
     "atomic" : [

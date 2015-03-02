@@ -1,5 +1,6 @@
 var fs = require('fs');
 var _ = require('underscore');
+var Template_Config_Validator = require('../template_config_validator');
 
 /**
 * function is responsible for loading the templates
@@ -55,8 +56,17 @@ var Template_Loader = function(template_path, config_file_name){
 */
 Template_Loader.prototype.load_config_file = function(){
   var config_string = fs.readFileSync(this.template_path+this.config_file_name, "utf8");
-  this.config = JSON.parse(config_string);
-  return this.config;
+  var parsed_config = JSON.parse(config_string);
+  var config_validator = new Template_Config_Validator();
+  if(config_validator.validate(parsed_config)){ //validate the config file
+    this.config = parsed_config;
+    return this.config;
+  }
+  else {
+    console.log('The template configuration file is not valid');
+    this.config = null;
+    return null;
+  }
 };
 
 /**
