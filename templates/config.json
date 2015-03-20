@@ -7,6 +7,15 @@
         "path" : "blueprint/blueprint.tmpl.apib"
       },
       {
+        "path" : "api/app/db_query_builder/build_db_query.js"
+      },
+      {
+        "path" : "api/app/db_query_builder/index.js"
+      },
+      {
+        "path" : "api/test/db_query_builder.js"
+      },
+      {
         "path" : "api/server.tmpl.js"
       },
       {

@@ -11,7 +11,8 @@
     mongo_client.connect(mongo_url, function(err, db) {
       if(err) error_handler.send_error(res, 102);
       var collection = db.collection('<%=scope.pluralize.plural(model.name).toLowerCase()%>');
-      collection.find({}).toArray(function(err, docs){
+      var query_string = db_query_builder.build_db_query(req.query, new model.<%=model.name%>().fields);
+      collection.find(query_string).toArray(function(err, docs){
         if(err) error_handler.send_error(res, 100);
         res.send(docs);
         db.close();

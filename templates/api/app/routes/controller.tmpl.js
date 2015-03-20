@@ -4,6 +4,7 @@ var mongo_client = mongo.MongoClient;
 var mongo_url = require('../Db')();
 var model = require('../models');
 var nested = require('../nested');
+var db_query_builder = require('../db_query_builder');
 
 var <%=model.name%>Controller = {
 
