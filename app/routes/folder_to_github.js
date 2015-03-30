@@ -8,8 +8,7 @@ var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var git = require('gift');
-var clone = require('git-clone');
-var exec = require('child_process').exec;
+var async = require('async');
 
 var generate_handlers = {
 
@@ -22,14 +21,18 @@ var generate_handlers = {
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var repo = new git(config.OUTPUT_GIT_FOLDER);
+      //create branch name
       var branch_name = new Date();
       branch_name = branch_name.toISOString().replace(":","-").substring(0,16);
-      //create branch
-      repo.create_branch(branch_name,function(err){
-        if(err) console.log(err);
-        //switch to that branch
-        repo.checkout(branch_name, function(err){
-          if(err) console.log(err);
+      //start the process
+      async.series([
+        function(callback){
+          return repo.create_branch(branch_name, callback);
+        },
+        function(callback){
+          return repo.checkout(branch_name, callback);
+        },
+        function(callback){
           var scope = new Scope(model);
           //load the templates
           var template_loader = new Template_Loader(config.TEMPLATE_DIR, config.TEMPLATE_CONFIG_FILE_NAME);
@@ -58,33 +61,21 @@ var generate_handlers = {
           var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
           template_saver.save_duplicated_templates();
           template_saver.save_normal_templates();
-          //find the changed files
-          var changes = false;  //flag indicates if there are any files with change, if so uload to github
-          var options = {}, args = ["--name-only"];
-          repo.git("diff", options, args, function(err, stdout, stderr) {
-            changes = true;
-            console.log(stdout);
-            repo.add(stdout,function(err){
-              console.log(err);
-            });
-          });
-          //push it
-          setTimeout(function(){
-            if(changes){
-              repo.commit("Generated: "+Date.now(),function(err){
-                if(err) console.log(err);
-                repo.remote_push("origin",branch_name,function(err){
-                  if(err) console.log(err);
-                  res.send('have no idea, look to the console');
-                });
-              });
-            }
-            else{
-              res.send('no change, no github, remove the brunch');
-            }
-          },2000);
-
-        });
+          callback(false);
+        },
+        function(callback){
+          return repo.add('-A',callback);
+        },
+        function(callback){
+          return repo.commit('Generated: '+Date.now(), callback);
+        },
+        function(callback){
+        return repo.remote_push("origin",branch_name, callback);
+        }
+      ],function(error){
+        if(error) console.log(error);
+        console.log('The changes has been saved in the repository');
+        res.send('have no idea, look to the console');
       });
     }
   }

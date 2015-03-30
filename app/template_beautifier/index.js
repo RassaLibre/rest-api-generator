@@ -18,6 +18,15 @@ var Template_Beautifier = function(normal_templates, duplicated_templates){
   */
   this.normal_templates = normal_templates;
 
+  /**
+  * The settings for the beautifier
+  * @type {Object}
+  */
+  this.beautifier_settings = {
+    indent_size: 2,
+    max_preserve_newlines: 4,
+    jslint_happy: true };
+
 };
 
 /**
@@ -28,9 +37,8 @@ Template_Beautifier.prototype.beautify_normal_templates = function(){
   for(var i = 0; i < this.normal_templates.length; i++){
     //because we do not want to do it with the blueprint
     if(_.last(_.last(this.normal_templates[i]['path'].split('/')).split('.') === "js")){
-      this.normal_templates[i]['executed_template'] = 
-        beautify(this.normal_templates[i]['executed_template'],
-          { indent_size: 2, max_preserve_newlines: 4, jslint_happy: true });
+      this.normal_templates[i]['executed_template'] =
+        beautify(this.normal_templates[i]['executed_template'], this.beautifier_settings);
     }
   }
 };
@@ -44,9 +52,8 @@ Template_Beautifier.prototype.beautify_duplicated_templates = function(){
     var duplicates = Object.keys(this.duplicated_templates[i]['executed_templates']);    //keys like "Oven","Part"
     for(var j = 0; j < duplicates.length; j++){                                 //go through all of them and save them
       var duplicate  = duplicates[j];
-      this.duplicated_templates[i]['executed_templates'][duplicate] = 
-      beautify(this.duplicated_templates[i]['executed_templates'][duplicate],
-        { indent_size: 2, max_preserve_newlines: 4, jslint_happy: true });
+      this.duplicated_templates[i]['executed_templates'][duplicate] =
+      beautify(this.duplicated_templates[i]['executed_templates'][duplicate], this.beautifier_settings);
     }
   }
 };
