@@ -12,23 +12,12 @@ function <%=model.name%>(){
   * set the fields
   */
   this.fields = {
-    /**
-    name : {type: "string", regex: /^[A-Za-z0-9]+$/i, length: 30},
-    value : {type: "integer", min: 0, max: 40},
-    price : {type: "integer", min: 0}
-    **/
 <% _.each(model.properties, function(property){ %>
   <%=property.name%> : {
     type: '<%=property.type.type%>',
-    <%
-      var keys = _.keys(property.type);
+    <% var keys = _.keys(property.type);
       _.each(keys, function(key){
-        if(key === "type") return;
-    %>
-          <%=key%> : <%=scope.field_properties({key: key, value: property.type[key]})%>,
-    <%
-      })
-    %>
+        if(key === "type") return; %><%=key%> : <%=scope.field_properties({key: key, value: property.type[key]})%>,<% }) %>
   },
 <% })%>
   };
