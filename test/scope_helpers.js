@@ -150,6 +150,8 @@ describe('Scope Helpers', function(){
       assert.equal(get_natural_language_for_endpoint(endpoint), 'get parts from oven');
       endpoint.url = 'ovens/:id/parts/:parts_id'
       assert.equal(get_natural_language_for_endpoint(endpoint), 'get part from oven');
+      endpoint.type = "POST";
+      assert.equal(get_natural_language_for_endpoint(endpoint), 'add part to oven');
     });
 
   });

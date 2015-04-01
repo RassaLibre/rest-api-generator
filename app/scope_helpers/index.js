@@ -202,10 +202,20 @@ helpers['get_natural_language_for_endpoint'] = function(endpoint){
     sentence = sentence + ' ' + pluralize.singular(splited[0]);
   }
   if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i)){
-    sentence = sentence + ' ' + splited[2] + ' from ' + pluralize.singular(splited[0]);
+    var preposition;
+    if(endpoint.type === 'GET') preposition = 'from';
+    else if(endpoint.type === 'POST') preposition = 'to';
+    else if(endpoint.type === 'DELETE') preposition = 'from';
+    else preposition = 'in';
+    sentence = sentence + ' ' + splited[2] + ' '+ preposition +' ' + pluralize.singular(splited[0]);
   }
   if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+\/:[a-z_-]+$/i)){
-    sentence = sentence + ' ' + pluralize.singular(splited[2]) + ' from ' + pluralize.singular(splited[0]);
+    var preposition;
+    if(endpoint.type === 'GET') preposition = 'from';
+    else if(endpoint.type === 'POST') preposition = 'to';
+    else if(endpoint.type === 'DELETE') preposition = 'from';
+    else preposition = 'in';
+    sentence = sentence + ' ' + pluralize.singular(splited[2]) + ' '+preposition+' ' + pluralize.singular(splited[0]);
   }
   return sentence;
 }
