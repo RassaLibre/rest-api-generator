@@ -8,8 +8,9 @@ var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
 var tgz = require('express-tgz');
-var clone = require("nodegit").Clone.clone;
+var git = require('gift');
 var rimraf = require('rimraf'); //remove folders with content
+var async = require('async');
 
 var generate_handlers = {
 
@@ -22,11 +23,17 @@ var generate_handlers = {
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var scope = new Scope(model);
-      //removes the folder into which the github repo with templates is
-      //cloned
-      rimraf(config.TEMPLATE_CLONE_TARGET, function(err){
-        //clone the repo with templates
-        clone(config.TEMPLATE_REPO, config.TEMPLATE_CLONE_TARGET, {ignoreCertErrors: 1}).done(function(repo){
+
+      async.series([
+        function(callback){
+          //removes the folder into which the github repo with templates is cloned
+          return rimraf(config.TEMPLATE_CLONE_TARGET, callback);
+        },
+        function(callback){
+          //clone the templates to the folder on the server
+          git.clone(config.TEMPLATE_REPO, config.TEMPLATE_CLONE_TARGET, callback);
+        },
+        function(callback){
           //load the templates
           var template_loader = new Template_Loader(config.TEMPLATE_CLONE_TARGET, config.TEMPLATE_CONFIG_FILE_NAME);
           template_loader.load_config_file();
@@ -54,8 +61,14 @@ var generate_handlers = {
           var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
           template_saver.save_duplicated_templates();
           template_saver.save_normal_templates();
-          res.tgz('generated/', 'api.tar.gz', false);
-        });
+          callback(false);
+        },
+      ],function(error){
+        if(error){
+          console.log(error);
+          res.send(error);
+        }
+        else res.tgz('generated/', 'api.tar.gz', false);
       });
     }
   }
