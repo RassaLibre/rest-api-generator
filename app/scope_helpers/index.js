@@ -40,7 +40,7 @@ helpers["get_model_by_name"] = function(models, name){
 *  and returns the first part of url which does not start with :
 * for example if 'ovens/:id/parts/:parts_id' are passed, 'parts' will be returned
 * @param {String} url
-* @param {String} 
+* @param {String}
 */
 helpers["get_latest_param_name"] = function(url){
   var splited = url.split('/');
@@ -59,7 +59,7 @@ helpers["get_latest_param_name"] = function(url){
 * This method is ment to be used when naming controllers "getOvens" or "getOven"
 * etc.
 * @param {String} url
-* @param {String} method  
+* @param {String} method
 */
 helpers["is_singular_resource"] = function(url, method){
   var splited = url.split('/');
@@ -180,6 +180,34 @@ helpers['blueprint_friendly_models'] = function(model){
     formated_endpoints[model.endpoints[i].url].push(model.endpoints[i]);
   }
   return formated_endpoints;
+}
+
+/**
+* The function gets an endpoint and returns a human readable description
+* of what the endpoint is actually doing
+* @param {Object} endpoint
+* @return {String}
+*/
+helpers['get_natural_language_for_endpoint'] = function(endpoint){
+  var sentence = '';
+  if(endpoint.type === 'GET') sentence = 'get';
+  else if(endpoint.type === 'POST') sentence = 'add';
+  else if(endpoint.type === 'DELETE') sentence = 'remove';
+  else sentence = 'edit';
+  var splited = endpoint.url.split('/');
+  if(endpoint.url.match(/^\/?[a-z-_]+\/?$/i)){
+    sentence = sentence + ' ' + splited[0];
+  }
+  if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/?$/i)){
+    sentence = sentence + ' ' + pluralize.singular(splited[0]);
+  }
+  if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+$/i)){
+    sentence = sentence + ' ' + splited[2] + ' from ' + pluralize.singular(splited[0]);
+  }
+  if(endpoint.url.match(/^\/?[a-z-_]+\/:[a-z_-]+\/[a-z-_]+\/:[a-z_-]+$/i)){
+    sentence = sentence + ' ' + pluralize.singular(splited[2]) + ' from ' + pluralize.singular(splited[0]);
+  }
+  return sentence;
 }
 
 /**

@@ -1,4 +1,4 @@
-### edit <%=model.name%> [<%=endpoint.type%>]
+### <%=scope.get_natural_language_for_endpoint(endpoint)%> [<%=endpoint.type%>]
 + Request (application/json)
 <%
   /**
@@ -10,7 +10,7 @@
   var param_to_be_edited = correct_model.properties[0];
   var fake_model = {properties: [param_to_be_edited]};
 %>
-<% 
+<%
   var random_data =  scope.random_json_builder({model: fake_model, scope: scope});
   var JSON_random_data = JSON.parse(random_data);
   delete JSON_random_data._id;

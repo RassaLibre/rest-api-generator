@@ -1,4 +1,4 @@
-### add <%=model.name%> [<%=endpoint.type%>]
+### <%=scope.get_natural_language_for_endpoint(endpoint)%> [<%=endpoint.type%>]
 + Request (application/json)
 
 <%
@@ -9,7 +9,7 @@
   var model_name = scope.get_latest_param_name(key);
   var correct_model = scope.get_model_by_name(scope.model.models, model_name);
 %>
-<% 
+<%
   var random_data =  scope.random_json_builder({model: correct_model, scope: scope});
   var JSON_random_data = JSON.parse(random_data);
   delete JSON_random_data._id;

@@ -60,17 +60,17 @@ describe('Scope Helpers', function(){
     });
 
     it('should return true', function(){
-      assert.equal(is_singular("ovens/:id","GET"), true); 
-      assert.equal(is_singular("ovens/:id","PUT"), true); 
+      assert.equal(is_singular("ovens/:id","GET"), true);
+      assert.equal(is_singular("ovens/:id","PUT"), true);
       assert.equal(is_singular("ovens","POST"), true);
-      assert.equal(is_singular("ovens/:id","DELETE"), true);  
+      assert.equal(is_singular("ovens/:id","DELETE"), true);
     });
 
     it('should return false', function(){
       assert.equal(is_singular("ovens","GET"), false);
       assert.equal(is_singular("ovens","DELETE"), false);
       assert.equal(is_singular("ovens/:id","POST"), false);
-      assert.equal(is_singular("ovens","PUT"), false);   
+      assert.equal(is_singular("ovens","PUT"), false);
     });
 
   });
@@ -129,6 +129,27 @@ describe('Scope Helpers', function(){
     it('should find the string in the properties', function(){
       assert.equal(is_valid_prop_name(example_data.models[0].properties, "status"), true);
       assert.equal(is_valid_prop_name(example_data.models[0].properties, "tomas"), false);
+    });
+
+  });
+
+  describe('Get natural language for endpoint', function(){
+
+    var get_natural_language_for_endpoint;
+
+    beforeEach(function(){
+      get_natural_language_for_endpoint = scope_helpers['get_natural_language_for_endpoint'];
+    });
+
+    it('should get the correct natural language for endpoint',function(){
+      var endpoint = {"id": ":33","type": "GET","url": "ovens/"};
+      assert.equal(get_natural_language_for_endpoint(endpoint), 'get ovens');
+      endpoint.url = 'ovens/:id'
+      assert.equal(get_natural_language_for_endpoint(endpoint), 'get oven');
+      endpoint.url = 'ovens/:id/parts'
+      assert.equal(get_natural_language_for_endpoint(endpoint), 'get parts from oven');
+      endpoint.url = 'ovens/:id/parts/:parts_id'
+      assert.equal(get_natural_language_for_endpoint(endpoint), 'get part from oven');
     });
 
   });
