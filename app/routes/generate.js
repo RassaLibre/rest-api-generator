@@ -18,12 +18,17 @@ var generate_handlers = {
   * generate NodeJS server
   */
   nodejs: function(req, res){
+    var time = new Date().getTime();
+    console.log('--------------------- Received a request -----------------');
+    console.log('Time of the acceptation: '+time);
+
+
     //validate metamodel
     var model = req.body;
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
       var scope = new Scope(model);
-      
+
       //removes the folder into which the github repo with templates is
       //cloned
       rimraf(config.TEMPLATE_CLONE_TARGET, function(err){
@@ -65,6 +70,12 @@ var generate_handlers = {
       var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
+
+      var executed = new Date().getTime();
+      console.log('Finished execution: '+executed);
+      console.log('=');
+      console.log(executed-time);
+      console.log('----------------------------------------------------------')
       res.send('have no idea, look to the console');
       //res.tgz('generated/', 'api.tar.gz', false);
     }
