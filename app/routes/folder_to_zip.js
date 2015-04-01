@@ -7,7 +7,7 @@ var Template_Loader = require('../template_loader');
 var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
-var targz = require('tar.gz');
+var tgz = require('express-tgz');
 
 var generate_handlers = {
 
@@ -49,10 +49,7 @@ var generate_handlers = {
       var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
-      var compress = new targz().compress(config.OUTPUT_DIR,
-        config.COMPRESED_OUTPUT_FOLDER+'compressed.tar.gz', function(err){
-          res.download(config.COMPRESED_OUTPUT_FOLDER+'compressed.tar.gz');
-      });      
+      res.tgz('generated/', 'api.tar.gz', false);     
     }
   }
 };
