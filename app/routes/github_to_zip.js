@@ -54,7 +54,7 @@ var generate_handlers = {
           var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
           template_saver.save_duplicated_templates();
           template_saver.save_normal_templates();
-          res.tgz('generated/', 'api.tar.gz', false);  
+          res.tgz('generated/', 'api.tar.gz', false);
         });
       });
     }
