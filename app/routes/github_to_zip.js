@@ -7,10 +7,10 @@ var Template_Loader = require('../template_loader');
 var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
-var tgz = require('express-tgz');
 var git = require('gift');
 var rimraf = require('rimraf'); //remove folders with content
 var async = require('async');
+var targz = require('tar.gz');
 
 var generate_handlers = {
 
@@ -68,7 +68,11 @@ var generate_handlers = {
           console.log(error);
           res.send(error);
         }
-        else res.tgz('generated/', 'api.tar.gz', false);
+        else{
+          var compress = new targz().compress('generated/', config.COMPRESED_OUTPUT_FOLDER+'compressed.tar.gz', function(err){
+            res.send('the REST API has been generated');
+          });
+        }
       });
     }
   }
