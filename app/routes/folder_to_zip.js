@@ -7,7 +7,7 @@ var Template_Loader = require('../template_loader');
 var Template_Executor = require('../template_executor');
 var Template_Saver = require('../template_saver');
 var Template_Beautifier = require('../template_beautifier');
-var tgz = require('express-tgz');
+var targz = require('tar.gz');
 
 var generate_handlers = {
 
@@ -18,9 +18,11 @@ var generate_handlers = {
   */
   nodejs: function(req, res){
     //validate metamodel
+    console.log('---- Folder to zip ----');
     var model = req.body;
     var metamodel = new Metamodel();
     if(metamodel.validate(model)){
+      console.log('--- valid ---');
       var scope = new Scope(model);
       //load the templates
       var template_loader = new Template_Loader(config.TEMPLATE_DIR, config.TEMPLATE_CONFIG_FILE_NAME);
@@ -49,7 +51,13 @@ var generate_handlers = {
       var template_saver = new Template_Saver(duplicated_templates, normal_templates, config.OUTPUT_DIR);
       template_saver.save_duplicated_templates();
       template_saver.save_normal_templates();
-      res.tgz('generated/', 'api.tar.gz', false);     
+      var compress = new targz().compress('generated/', config.COMPRESED_OUTPUT_FOLDER+'compressed.tar.gz', function(err){
+        res.send('the REST API has been generated');
+      });
+
+    }
+    else{
+      console.log('invalid model');
     }
   }
 };

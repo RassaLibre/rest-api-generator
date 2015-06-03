@@ -261,7 +261,9 @@ helpers["get_valid_url_params"] = function(url, param){
       "id" : "54d3d1d4a554e10f0be08900"
     }
   };
-  return data[url][param];
+  if(data[url])
+    return data[url][param];
+  else return '';
 }
 
 module.exports = helpers;

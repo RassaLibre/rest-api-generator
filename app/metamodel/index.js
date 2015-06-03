@@ -100,7 +100,7 @@ metamodel.prototype.validate_properties_ = function(properties){
         if(!_.isString(properties[i].type.regex)) return false;
         var regEx = new RegExp(properties[i].type.regex,"g");
         if(!_.isRegExp(regEx)) return false;
-      } 
+      }
     }
     //if the property is type of integer, check the min and max
     else if((properties[i].type.type === 'integer')||
@@ -147,7 +147,7 @@ metamodel.prototype.validate_endpoints_ = function(endpoints){
     if(!_.isString(endpoints[i].url)) return false;
     if(endpoints[i].url.match("^\/.*")) return false; //no slash at the beginning allowed
     if(_.indexOf(this.allowed_http_methods_, endpoints[i].type) === -1)
-      return false;        
+      return false;
   }
   return true;
 };

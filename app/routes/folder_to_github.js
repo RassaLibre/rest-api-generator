@@ -78,6 +78,7 @@ var generate_handlers = {
         res.send('have no idea, look to the console');
       });
     }
+    else console.lo('invalid model')
   }
 };
 
